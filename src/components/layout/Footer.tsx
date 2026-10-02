@@ -11,11 +11,11 @@ export function Footer({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto border-t border-line bg-bg">
+    <footer className="theme-dark relative mt-auto border-t border-line">
       <div className="container-x pb-10 pt-20 md:pt-28">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <p className="font-display text-2xl font-bold tracking-[-0.03em]">
+            <p className="wordmark text-[1.75rem]">
               Viewport<span className="text-fg-2">Studio3D</span>
             </p>
             <p className="mt-4 max-w-sm text-fg-2">{c.footer.tagline}</p>
@@ -63,7 +63,7 @@ export function Footer({ locale }: { locale: Locale }) {
           aria-hidden="true"
           focusable="false"
           viewBox="0 0 1000 124"
-          className="pointer-events-none mt-20 block w-full select-none"
+          className="pointer-events-none mt-24 block w-full select-none md:mt-32"
         >
           <text
             x="0"
@@ -71,7 +71,7 @@ export function Footer({ locale }: { locale: Locale }) {
             textLength="1000"
             lengthAdjust="spacingAndGlyphs"
             fill="currentColor"
-            className="text-fg/[0.07]"
+            className="text-fg"
             style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 126, letterSpacing: '-0.055em' }}
           >
             ViewportStudio3D

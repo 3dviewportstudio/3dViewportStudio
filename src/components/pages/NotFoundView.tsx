@@ -9,7 +9,7 @@ export function NotFoundView({ locale }: { locale: Locale }) {
     <PageTransition>
       <section className="container-x flex min-h-[80svh] flex-col justify-center pb-24 pt-[calc(var(--header-h)+3rem)]">
         <p className="label">404</p>
-        <h1 className="mt-6 max-w-[16ch] font-display text-[clamp(2.75rem,7vw,6rem)] font-bold leading-none tracking-[-0.04em]">{c.title}</h1>
+        <h1 className="mt-6 max-w-[16ch] font-display text-[clamp(2.75rem,7vw,6rem)] font-medium leading-[0.92] tracking-[-0.055em]">{c.title}</h1>
         <p className="text-lead mt-6 max-w-[44ch]">{c.text}</p>
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href={routes[locale].home} className="btn btn-primary">

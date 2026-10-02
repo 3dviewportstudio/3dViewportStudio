@@ -8,7 +8,7 @@ import { ContactForm } from './ContactForm';
 export function Contact({ locale }: { locale: Locale }) {
   const c = t(locale).contact;
   return (
-    <section id={sectionIds[locale].contact} aria-labelledby="contact-title" className="section-y relative isolate border-t border-line">
+    <section id={sectionIds[locale].contact} aria-labelledby="contact-title" className="theme-dark sheet section-y isolate">
       {/* Luz principal ámbar sobre la zona de contacto: con ratón sigue al cursor con inercia (MotionProvider) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div
@@ -16,13 +16,15 @@ export function Contact({ locale }: { locale: Locale }) {
           className="absolute left-[42%] top-[-35%] h-[80%] w-[60%] bg-[radial-gradient(closest-side,rgb(255_166_64/0.15),rgb(255_166_64/0.05)_55%,transparent)]"
         />
       </div>
-      <div className="container-x grid gap-14 md:grid-cols-12 md:gap-8">
+      <div className="container-x">
+        <SectionLabel>{c.label}</SectionLabel>
+        <h2 id="contact-title" className="h-giant mt-8 max-w-[10ch]" data-reveal>
+          {c.title}
+        </h2>
+      </div>
+      <div className="container-x mt-16 grid gap-14 md:mt-24 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-5">
-          <SectionLabel>{c.label}</SectionLabel>
-          <h2 id="contact-title" className="mt-6 max-w-[11ch] font-display text-[clamp(3rem,6vw,5.75rem)] font-bold leading-[0.95] tracking-[-0.045em]" data-reveal>
-            {c.title}
-          </h2>
-          <p className="text-lead mt-8 max-w-[32ch]" data-reveal>
+          <p className="text-lead max-w-[32ch]" data-reveal>
             {c.intro}
           </p>
           <div className="mt-12 border-t border-line pt-6" data-reveal>

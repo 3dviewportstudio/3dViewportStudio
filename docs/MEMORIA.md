@@ -91,7 +91,25 @@ Objetivo: mejorar el scroll sin cambiar diseño, contenido ni funciones.
 
 Tampoco se añadieron aurora ni mesh gradients genéricos, que competirían con los renders. No se inventaron testimonios ni precios.
 
-## 4. Verificación
+## 4. Tercera fase · Rediseño completo «Estudio / Sala de proyección» (commit siguiente)
+
+Petición: rediseño evidente, no mejora incremental. El contenido se mantiene; cambian layout, color, tipografía y estructura.
+
+- **Dos mundos que se alternan.** Sala de proyección (negro absoluto, `.theme-dark`), donde los renders se funden con la página, y estudio (gris de ciclorama `#e6e6e3` con tinta, `.theme-light`). Cada sección es una «lámina» (`.sheet`) con las esquinas superiores redondeadas que se monta sobre la anterior.
+- **Tipografía.** Geist medio, a escala gigante y con el espaciado cerrado, para todos los titulares (`h-section`, `h-giant`). Satoshi Black solo para el logotipo.
+- **Acento.** Naranja de render `#ff6a1a`; en fondo claro, `#b54100` para texto y foco (AA).
+- **Cabecera.** Detecta el tono de la sección que tiene debajo y cambia sus colores con una transición.
+- **Hero.** Render a sangre a pantalla completa, titular enorme con las palabras subiendo desde una máscara y render progresivo por cuadrículas.
+- **Manifiesto.** Declaración gigante que se ilumina con el scroll, tres ideas en columnas y el estudio de variantes dentro de una pantalla negra.
+- **Trabajo.** Cada proyecto es un capítulo con el nombre a escala gigante. Fine Nipona se muestra en díptico 4:5 y pPhone a todo el ancho.
+- **Servicios.** Se mantiene el storytelling, ahora en el estudio claro.
+- **Proceso.** Cuatro pasos en horizontal, numerales grandes y una línea de progreso naranja.
+- **Sobre mí y FAQ.** En el estudio claro.
+- **Contacto y pie.** Contacto en negro con un titular gigante; el pie cierra con el logotipo a todo el ancho.
+- **Páginas de caso.** En la sala negra.
+- **Lighthouse.** Móvil: 92 de rendimiento (la primera pasada, en frío, 85) y 100 de accesibilidad. Escritorio: 100 de rendimiento, 100 de accesibilidad, buenas prácticas y SEO.
+
+## 5. Verificación (fases 1 y 2)
 
 - `tsc --noEmit`, `eslint` y `next build` sin errores.
 - Navegador (Chromium): sin errores de consola ni scroll horizontal en 7 rutas, en español e inglés, en escritorio, móvil y con movimiento reducido. Las transiciones de página se probaron en escritorio y móvil.
@@ -111,7 +129,7 @@ En móvil quedó justo en el límite del objetivo de «más de 90».
 - El Chromium de pruebas no reproduce H.264: se comprobó la lógica de los vídeos, no la imagen.
 - Las cifras de Lighthouse pueden variar en un equipo real.
 
-## 5. Pendiente / ideas
+## 6. Pendiente / ideas
 
 - Fusionar `claude/beautiful-fermat-i5cl2g` en `main` cuando se haya revisado en local.
 - Probar en Safari y Firefox, y en un móvil real.
@@ -119,7 +137,7 @@ En móvil quedó justo en el límite del objetivo de «más de 90».
   - reducir el JavaScript inicial;
   - añadir una variante de 720 px a la imagen móvil del hero.
 
-## 6. Cómo verlo en local (Windows)
+## 7. Cómo verlo en local (Windows)
 
 ```powershell
 cd C:\Users\Lucas\Desktop\web\viewportstudio3d-web

@@ -1,30 +1,31 @@
 @import 'tailwindcss';
 
 /* ───────────────────────── Tokens ─────────────────────────
- * La web es el viewport de Blender del estudio:
- * - Grafito de la interfaz (no negro puro) para que los renders, que sí tienen fondo negro, se lean como piezas enmarcadas.
- * - Ámbar = "selección": el color del objeto activo en Blender. Marca hover, foco, estado activo y la acción principal.
- * - Rojo, verde y azul solo para los ejes X, Y y Z del gizmo 3D.
+ * Dos mundos que se alternan por secciones:
+ * - Estudio (base, claro): gris de ciclorama y tinta. Texto, ideas, proceso.
+ * - Sala de proyección (.theme-dark): negro absoluto. Los renders tienen fondo negro y se funden con la página.
+ * El naranja es la "selección" de Blender: acción principal, foco, estado activo. Rojo, verde y azul solo para el gizmo.
  */
 @theme {
-  --color-bg: #141517;
-  --color-bg-2: #1b1d20;
-  --color-bg-3: #24272b;
-  --color-fg: #f1efea;
-  --color-fg-2: #a9abaf;
-  --color-fg-3: #8c8f94;
-  --color-line: rgb(241 239 234 / 0.1);
-  --color-line-strong: rgb(241 239 234 / 0.2);
-  --color-accent: #ffa640;
-  --color-accent-2: #ffbf78;
-  --color-accent-ink: #1c1206;
+  --color-bg: #e6e6e3;
+  --color-bg-2: #dcdcd8;
+  --color-bg-3: #d1d1cc;
+  --color-fg: #111110;
+  --color-fg-2: #4b4b49;
+  --color-fg-3: #5e5e5b;
+  --color-line: rgb(17 17 16 / 0.14);
+  --color-line-strong: rgb(17 17 16 / 0.28);
+  --color-accent: #ff6a1a;
+  --color-accent-2: #b54100;
+  --color-accent-ink: #160800;
+  --color-focus: #b54100;
   --color-axis-x: #f0506e;
   --color-axis-y: #8ccf3f;
   --color-axis-z: #4d8ef2;
-  --color-danger: #ff7a7a;
-  --color-ok: #7ee2a0;
+  --color-danger: #c4262e;
+  --color-ok: #1d7a45;
 
-  --radius-media: 18px;
+  --radius-media: 20px;
 
   /* Curvas: salida fuerte para interfaz, entrada-salida para movimiento en pantalla, cajón tipo iOS */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -36,7 +37,8 @@
 }
 
 @theme inline {
-  --font-display: var(--font-satoshi, var(--font-geist-sans)), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: var(--font-satoshi, var(--font-geist-sans)), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
 }
@@ -46,8 +48,9 @@
   :root {
     --header-h: 76px;
     --gutter: clamp(16px, 4vw, 48px);
-    --section-y: clamp(112px, 14vw, 208px);
-    color-scheme: dark;
+    --section-y: clamp(104px, 12vw, 192px);
+    --sheet-r: clamp(22px, 3vw, 44px);
+    color-scheme: light;
     interpolate-size: allow-keywords;
   }
 
@@ -81,7 +84,7 @@
 
   /* El foco se dibuja como la selección de Blender: contorno ámbar */
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-focus);
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -127,6 +130,50 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* ───────────────────────── Temas por sección ───────────────────────── */
+.theme-dark,
+.site-header[data-tone='dark'] {
+  --color-bg: #000;
+  --color-bg-2: #0d0d0d;
+  --color-bg-3: #191919;
+  --color-fg: #f2f2ee;
+  --color-fg-2: #a8a8a4;
+  --color-fg-3: #8e8e8a;
+  --color-line: rgb(242 242 238 / 0.13);
+  --color-line-strong: rgb(242 242 238 / 0.26);
+  --color-accent-2: #ff9a57;
+  --color-focus: #ff6a1a;
+  --color-danger: #ff7a7a;
+  --color-ok: #7ee2a0;
+  color-scheme: dark;
+}
+.theme-light,
+.site-header[data-tone='light'] {
+  --color-bg: #e6e6e3;
+  --color-bg-2: #dcdcd8;
+  --color-bg-3: #d1d1cc;
+  --color-fg: #111110;
+  --color-fg-2: #4b4b49;
+  --color-fg-3: #5e5e5b;
+  --color-line: rgb(17 17 16 / 0.14);
+  --color-line-strong: rgb(17 17 16 / 0.28);
+  --color-accent-2: #b54100;
+  --color-focus: #b54100;
+  color-scheme: light;
+}
+.theme-dark,
+.theme-light {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* Lámina: cada sección entra por encima de la anterior con las esquinas superiores redondeadas */
+.sheet {
+  position: relative;
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  margin-top: calc(var(--sheet-r) * -1);
+}
+
 /* ───────────────────────── Utilidades ───────────────────────── */
 @utility container-x {
   width: 100%;
@@ -161,10 +208,19 @@ html.lenis body {
 
 @utility h-section {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.8vw, 6.25rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+/* Titular gigante: cierres de sección y nombres de proyecto */
+@utility h-giant {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3.25rem, 11vw, 12rem);
+  line-height: 0.84;
+  letter-spacing: -0.065em;
 }
 
 @utility text-lead {
@@ -223,7 +279,7 @@ html.lenis body {
 .btn-ghost {
   color: var(--color-fg);
   border: 1px solid var(--color-line-strong);
-  background: rgb(20 21 23 / 0.4);
+  background: color-mix(in srgb, var(--color-bg) 40%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -243,8 +299,8 @@ html.lenis body {
       0 16px 40px -14px rgb(255 166 64 / 0.85);
   }
   .btn-ghost:hover {
-    border-color: rgb(241 239 234 / 0.45);
-    background: rgb(241 239 234 / 0.06);
+    border-color: color-mix(in srgb, var(--color-fg) 45%, transparent);
+    background: color-mix(in srgb, var(--color-fg) 6%, transparent);
   }
 }
 
@@ -266,8 +322,8 @@ html.lenis body {
 }
 @media (hover: hover) and (pointer: fine) {
   .icon-btn:hover {
-    background: rgb(241 239 234 / 0.08);
-    border-color: rgb(241 239 234 / 0.4);
+    background: color-mix(in srgb, var(--color-fg) 8%, transparent);
+    border-color: color-mix(in srgb, var(--color-fg) 40%, transparent);
   }
 }
 
@@ -344,7 +400,7 @@ html.lenis body {
   position: absolute;
   width: var(--vp-size, 16px);
   height: var(--vp-size, 16px);
-  border-color: var(--vp-color, rgb(241 239 234 / 0.5));
+  border-color: var(--vp-color, color-mix(in srgb, var(--color-fg) 42%, transparent));
   border-style: solid;
   border-width: 0;
   transition: border-color 250ms ease;
@@ -533,7 +589,7 @@ html.lenis body {
 }
 
 .wordmark {
-  font-family: var(--font-display);
+  font-family: var(--font-wordmark);
   font-weight: 900;
   letter-spacing: -0.055em;
   line-height: 0.8;
@@ -562,6 +618,21 @@ html.lenis body {
   margin-bottom: -0.06em;
 }
 
+/* Titular del hero: cada palabra sube desde su máscara */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: top;
+}
+.word-rise {
+  display: inline-block;
+}
+.motion-ok .word-rise {
+  animation: char-rise 1.1s var(--ease-out-expo) both;
+  animation-delay: calc(0.35s + var(--i) * 55ms);
+}
 .motion-ok .hero-fade {
   animation: fade-up 900ms var(--ease-out) both;
   animation-delay: calc(0.5s + var(--d, 0) * 70ms);
@@ -595,6 +666,13 @@ html.lenis body {
 }
 
 /* ───────────────────────── Cabecera: píldora flotante ───────────────────────── */
+.site-header {
+  color: var(--color-fg);
+}
+.site-header .wordmark,
+.site-header .nav-link {
+  transition: color 300ms ease;
+}
 .nav-shell {
   border: 1px solid transparent;
   border-radius: 999px;
@@ -604,7 +682,7 @@ html.lenis body {
     box-shadow 300ms ease;
 }
 .site-header[data-scrolled='true'] .nav-shell {
-  background: rgb(27 29 32 / 0.72);
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
   border-color: var(--color-line);
   box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -713,7 +791,7 @@ html.lenis body {
 }
 @media (hover: hover) and (pointer: fine) {
   .faq-item summary:hover .faq-icon {
-    border-color: rgb(241 239 234 / 0.45);
+    border-color: color-mix(in srgb, var(--color-fg) 45%, transparent);
   }
 }
 
@@ -856,6 +934,10 @@ html.lenis body {
   :where(.motion-ok, .motion-reduce) .story-step[data-on='false']:not(:focus-within) {
     opacity: 0.75;
   }
+  /* Sobre el gris del estudio el texto secundario tiene menos margen: el atenuado se queda en 0,88 (AA) */
+  :where(.motion-ok, .motion-reduce) .theme-light .story-step[data-on='false']:not(:focus-within) {
+    opacity: 0.88;
+  }
 }
 
 /* ───────────────────────── Formulario ───────────────────────── */
@@ -898,7 +980,7 @@ html.lenis body {
 }
 @media (hover: hover) and (pointer: fine) {
   .field:hover:not(:focus) {
-    border-color: rgb(241 239 234 / 0.34);
+    border-color: color-mix(in srgb, var(--color-fg) 34%, transparent);
   }
 }
 select.field {

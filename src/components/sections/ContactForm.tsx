@@ -56,7 +56,7 @@ export function ContactForm({ locale, privacyHref }: Props) {
         <span className="grid h-12 w-12 place-items-center rounded-full bg-accent text-accent-ink">
           <Check width={20} height={20} />
         </span>
-        <p className="mt-8 font-display text-3xl font-bold tracking-[-0.03em]">{c.success.title}</p>
+        <p className="mt-8 font-display text-[2rem] font-medium tracking-[-0.045em]">{c.success.title}</p>
         <p className="mt-3 text-fg-2">{c.success.text(v?.email || '')}</p>
         <button
           type="button"

@@ -199,7 +199,8 @@ export function MotionProvider() {
         gsap.utils.toArray<HTMLElement>('[data-scrub-words]').forEach((el) => {
           gsap.fromTo(
             el.querySelectorAll('.scrub-word'),
-            { opacity: 0.4 },
+            // 0,5: aun sin iluminar, el titular grande mantiene 3:1 de contraste sobre el gris del estudio
+            { opacity: 0.5 },
             {
               opacity: 1,
               stagger: 0.1,

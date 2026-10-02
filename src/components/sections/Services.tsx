@@ -54,7 +54,7 @@ export function Services({ locale }: { locale: Locale }) {
   const contact = `#${sectionIds[locale].contact}`;
 
   return (
-    <section id={sectionIds[locale].services} aria-labelledby="services-title" className="section-y relative border-t border-line">
+    <section id={sectionIds[locale].services} aria-labelledby="services-title" className="theme-light sheet section-y">
       <div className="container-x">
         <SectionLabel>{c.label}</SectionLabel>
         <h2 id="services-title" className="h-section mt-6 max-w-[22ch]" data-reveal>
@@ -90,7 +90,7 @@ export function Services({ locale }: { locale: Locale }) {
                   <div className="story-inline mb-10">
                     <Media item={serviceMedia(id, s.mediaAlt)} locale={locale} ratio="4 / 5" sizes="(min-width: 640px) 80vw, 92vw" />
                   </div>
-                  <h3 className="font-display text-[clamp(2rem,3.4vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.035em]">{s.name}</h3>
+                  <h3 className="font-display text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-[0.96] tracking-[-0.05em]">{s.name}</h3>
                   <p className="text-lead mt-5 max-w-[40ch]">{s.text}</p>
                   <dl className="mt-10 grid gap-8 border-t border-line pt-6 sm:grid-cols-[1fr_auto] sm:gap-12">
                     <div>

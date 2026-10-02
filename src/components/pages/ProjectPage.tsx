@@ -105,7 +105,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
   return (
     <PageTransition>
       <JsonLd data={projectJsonLd(locale, project)} />
-      <article>
+      <article className="theme-dark">
         <header className="container-x pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
           <nav aria-label={locale === 'es' ? 'Ruta de navegación' : 'Breadcrumb'}>
             <ol className="label flex flex-wrap items-center gap-2">
@@ -120,7 +120,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
               </li>
             </ol>
           </nav>
-          <h1 className="wordmark mt-8 text-[clamp(3.5rem,13vw,11rem)]" data-reveal>
+          <h1 className="h-giant mt-8" data-reveal>
             {project.name}
           </h1>
           <div className="mt-12 grid gap-10 border-t border-line pt-10 md:grid-cols-12 md:gap-8">
@@ -182,7 +182,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
               data-cursor={t(locale).work.cursor}
             >
               <span className="label">{c.next}</span>
-              <span className="mt-4 flex items-center justify-between gap-4 font-display text-4xl font-bold tracking-[-0.03em]">
+              <span className="mt-4 flex items-center justify-between gap-4 font-display text-[clamp(2.5rem,4vw,3.5rem)] font-medium tracking-[-0.05em]">
                 {next.name}
                 <ArrowUpRight width={24} height={24} className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1" />
               </span>

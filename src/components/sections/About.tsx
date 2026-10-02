@@ -7,7 +7,7 @@ export function About({ locale }: { locale: Locale }) {
   const c = t(locale).about;
   const alt = { es: c.mediaAlt, en: c.mediaAlt };
   return (
-    <section id={sectionIds[locale].about} aria-labelledby="about-title" className="section-y relative border-t border-line">
+    <section id={sectionIds[locale].about} aria-labelledby="about-title" className="theme-light sheet section-y">
       <div className="container-x grid gap-14 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-5">
           <Media

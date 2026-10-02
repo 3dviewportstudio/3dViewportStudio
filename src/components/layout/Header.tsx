@@ -16,6 +16,8 @@ export function Header({ locale }: { locale: Locale }) {
   const pathname = usePathname() || routes[locale].home;
   const onHome = pathname === routes[locale].home;
   const [scrolled, setScrolled] = useState(false);
+  // Tono de la sección que hay bajo la cabecera: el estudio (claro) o la sala de proyección (negro)
+  const [tone, setTone] = useState<'light' | 'dark'>(() => (onHome || /\/(proyectos|projects)\//.test(pathname) ? 'dark' : 'light'));
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<SectionKey | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,26 @@ export function Header({ locale }: { locale: Locale }) {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    let raf = 0;
+    const probe = () => {
+      raf = 0;
+      const under = document.elementsFromPoint(window.innerWidth / 2, 36).find((el) => !el.closest('.site-header'));
+      setTone(under?.closest('.theme-dark, .theme-light')?.classList.contains('theme-dark') ? 'dark' : 'light');
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(probe);
+    };
+    probe();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [pathname]);
 
   // Sección visible en la home: se marca en la navegación (aria-current="location")
   useEffect(() => {
@@ -133,13 +155,14 @@ export function Header({ locale }: { locale: Locale }) {
       // Ancla visual: la cabecera no se mueve ni se funde al cambiar de página
       style={{ viewTransitionName: 'site-header' }}
       data-scrolled={scrolled || open ? 'true' : 'false'}
+      data-tone={open ? 'dark' : tone}
       data-menu={open ? 'true' : 'false'}
     >
       <div className="container-x h-full">
         <div className="nav-shell flex h-[calc(var(--header-h)-0.75rem)] items-center justify-between gap-4 pl-4 pr-2 sm:pl-5">
           <Link
             href={routes[locale].home}
-            className="rounded-full font-display text-[1.0625rem] font-bold tracking-[-0.03em] text-fg"
+            className="wordmark rounded-full text-[1.1875rem] text-fg"
             aria-label={`${site.name} — ${locale === 'es' ? 'inicio' : 'home'}`}
           >
             Viewport<span className="text-fg-2">Studio3D</span>
@@ -201,7 +224,7 @@ export function Header({ locale }: { locale: Locale }) {
       <div
         id="mobile-menu"
         ref={panelRef}
-        className="menu-panel fixed inset-x-0 bottom-0 top-[var(--header-h)] overflow-y-auto bg-bg lg:hidden"
+        className="menu-panel theme-dark fixed inset-x-0 bottom-0 top-[var(--header-h)] overflow-y-auto lg:hidden"
         data-open={open ? 'true' : 'false'}
         aria-hidden={!open}
         inert={!open}
@@ -212,7 +235,7 @@ export function Header({ locale }: { locale: Locale }) {
               <li key={k} className="menu-item border-b border-line" style={{ '--i': i } as CSSProperties}>
                 {navLink(
                   k,
-                  `flex items-center justify-between py-4 font-display text-[2rem] font-bold tracking-[-0.03em] transition-colors duration-200 aria-[current]:text-accent`,
+                  `flex items-center justify-between py-3 font-display text-[clamp(2.5rem,12vw,4rem)] font-medium leading-none tracking-[-0.055em] transition-colors duration-200 aria-[current]:text-accent`,
                   active === k,
                 )}
               </li>
