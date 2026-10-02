@@ -130,6 +130,8 @@ export function Header({ locale }: { locale: Locale }) {
   return (
     <header
       className="site-header fixed inset-x-0 top-0 z-50 h-[var(--header-h)] pt-3"
+      // Ancla visual: la cabecera no se mueve ni se funde al cambiar de página
+      style={{ viewTransitionName: 'site-header' }}
       data-scrolled={scrolled || open ? 'true' : 'false'}
       data-menu={open ? 'true' : 'false'}
     >

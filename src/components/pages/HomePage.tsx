@@ -1,5 +1,6 @@
 import { testimonials } from '@/content/projects';
 import { JsonLd } from '@/components/layout/JsonLd';
+import { PageTransition } from '@/components/layout/Transitions';
 import { About } from '@/components/sections/About';
 import { Contact } from '@/components/sections/Contact';
 import { Faq } from '@/components/sections/Faq';
@@ -14,7 +15,7 @@ import { homeJsonLd } from '@/lib/structured-data';
 
 export function HomePage({ locale }: { locale: Locale }) {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={homeJsonLd(locale)} />
       <Hero locale={locale} />
       <Problem locale={locale} />
@@ -25,6 +26,6 @@ export function HomePage({ locale }: { locale: Locale }) {
       {testimonials.length > 0 ? <Testimonials locale={locale} /> : null}
       <Faq locale={locale} />
       <Contact locale={locale} />
-    </>
+    </PageTransition>
   );
 }

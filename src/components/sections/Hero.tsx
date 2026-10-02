@@ -4,6 +4,7 @@ import { t } from '@/content/copy';
 import { projects } from '@/content/projects';
 import { Gizmo } from '@/components/ui/Gizmo';
 import { Picture } from '@/components/ui/Picture';
+import { RenderTiles } from '@/components/ui/RenderTiles';
 import { ArrowRight } from '@/components/ui/Icons';
 import { routes, sectionIds, type Locale } from '@/lib/routes';
 import { site } from '@/lib/site';
@@ -72,6 +73,9 @@ export function Hero({ locale }: { locale: Locale }) {
               imgClassName="h-full w-full object-cover object-[50%_55%] md:object-[70%_50%]"
             />
           </div>
+          {/* Entrada: el render se resuelve por cuadrículas desde el producto (CSS, solo con movimiento permitido) */}
+          <RenderTiles className="render-tiles--mobile" cols={5} rows={6} focus={[0.5, 0.5]} threads={3} />
+          <RenderTiles className="render-tiles--desktop" cols={12} rows={6} focus={[0.74, 0.55]} threads={6} />
         </div>
         {/* Fundidos para integrar el render con la página y asegurar el contraste del texto */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black via-transparent via-25% to-bg" />

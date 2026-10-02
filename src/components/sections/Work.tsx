@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { t } from '@/content/copy';
 import { projects, type Project } from '@/content/projects';
+import { SharedMedia } from '@/components/layout/Transitions';
 import { Media } from '@/components/ui/Media';
 import { SectionLabel } from '@/components/ui/SectionLabel';
 import { ArrowUpRight } from '@/components/ui/Icons';
@@ -69,7 +70,9 @@ export function Work({ locale }: { locale: Locale }) {
                     <CaseLink project={project} locale={locale} label={c.viewCase} />
                   </div>
                   <div className="grid grid-cols-2 gap-4 md:col-span-8 md:gap-6">
-                    <Media item={project.cover.primary} locale={locale} sizes="(min-width: 768px) 30vw, 46vw" interactive parallax={-3} />
+                    <SharedMedia id={project.cover.primary.id}>
+                      <Media item={project.cover.primary} locale={locale} sizes="(min-width: 768px) 30vw, 46vw" interactive parallax={-3} />
+                    </SharedMedia>
                     <Media
                       item={project.cover.secondary}
                       locale={locale}
@@ -86,7 +89,9 @@ export function Work({ locale }: { locale: Locale }) {
               <article key={project.slug} className="vp-group relative" data-cursor={c.cursor}>
                 {/* Crece al entrar en pantalla y se oscurece al salir (GSAP, en MotionProvider) */}
                 <div data-scale-in>
-                  <Media item={project.cover.primary} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" interactive />
+                  <SharedMedia id={project.cover.primary.id}>
+                    <Media item={project.cover.primary} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" interactive />
+                  </SharedMedia>
                 </div>
                 <div className="mt-10 grid gap-6 md:grid-cols-12 md:gap-8" data-reveal>
                   <div className="md:col-span-5">

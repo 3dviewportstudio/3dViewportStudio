@@ -1,8 +1,10 @@
+import { Fragment, type ReactNode } from 'react';
 import Link from 'next/link';
 import { t } from '@/content/copy';
 import { image, video } from '@/content/media';
 import { nextProject, type GalleryItem, type Project } from '@/content/projects';
 import { JsonLd } from '@/components/layout/JsonLd';
+import { PageTransition, SharedMedia } from '@/components/layout/Transitions';
 import { ArrowRight, ArrowUpRight } from '@/components/ui/Icons';
 import { Media } from '@/components/ui/Media';
 import { Picture } from '@/components/ui/Picture';
@@ -38,30 +40,48 @@ function toRows(items: GalleryItem[]): Row[] {
   return rows;
 }
 
-function GalleryRow({ row, locale, expand = false }: { row: Row; locale: Locale; expand?: boolean }) {
+/** Envuelve la pieza que también es portada en Trabajo para que la transición la traslade (elemento compartido). */
+function share(item: GalleryItem, shared: string | undefined, node: ReactNode) {
+  return item.id === shared ? (
+    <SharedMedia key={item.id} id={item.id}>
+      {node}
+    </SharedMedia>
+  ) : (
+    node
+  );
+}
+
+function GalleryRow({ row, locale, expand = false, shared }: { row: Row; locale: Locale; expand?: boolean; shared?: string }) {
   if (row.kind === 'wide') {
-    const wide = <Media item={row.items[0]} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" showCaption />;
+    const item = row.items[0];
+    const wide = share(item, shared, <Media item={item} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" showCaption />);
     return expand ? <div data-scale-in>{wide}</div> : wide;
   }
   if (row.kind === 'pair') {
+    const [a, b] = row.items;
     return (
       <div className="grid items-start gap-6 md:grid-cols-12 md:gap-8">
-        <Media item={row.items[0]} locale={locale} sizes="(min-width: 768px) 62vw, 94vw" showCaption className="md:col-span-8" />
-        <Media item={row.items[1]} locale={locale} sizes="(min-width: 768px) 30vw, 94vw" showCaption className="md:col-span-4" parallax />
+        {share(a, shared, <Media item={a} locale={locale} sizes="(min-width: 768px) 62vw, 94vw" showCaption className="md:col-span-8" />)}
+        {share(b, shared, <Media item={b} locale={locale} sizes="(min-width: 768px) 30vw, 94vw" showCaption className="md:col-span-4" parallax />)}
       </div>
     );
   }
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
       {row.items.map((item, i) => (
-        <Media
-          key={item.id}
-          item={item}
-          locale={locale}
-          sizes="(min-width: 768px) 30vw, (min-width: 640px) 46vw, 94vw"
-          showCaption
-          className={i === 1 ? 'md:mt-24' : ''}
-        />
+        <Fragment key={item.id}>
+          {share(
+            item,
+            shared,
+            <Media
+              item={item}
+              locale={locale}
+              sizes="(min-width: 768px) 30vw, (min-width: 640px) 46vw, 94vw"
+              showCaption
+              className={i === 1 ? 'md:mt-24' : ''}
+            />,
+          )}
+        </Fragment>
       ))}
     </div>
   );
@@ -83,7 +103,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
   ];
 
   return (
-    <>
+    <PageTransition>
       <JsonLd data={projectJsonLd(locale, project)} />
       <article>
         <header className="container-x pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
@@ -120,7 +140,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
 
         {lead ? (
           <div className="container-x mt-16 md:mt-24">
-            <GalleryRow row={lead} locale={locale} />
+            <GalleryRow row={lead} locale={locale} shared={project.cover.primary.id} />
           </div>
         ) : null}
 
@@ -187,6 +207,6 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
           </div>
         </section>
       </article>
-    </>
+    </PageTransition>
   );
 }

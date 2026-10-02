@@ -58,6 +58,48 @@ export function MotionProvider() {
     return () => document.removeEventListener('click', onClick);
   }, []);
 
+  // Servicios: el paso que cruza el centro de la pantalla elige el plano del visor.
+  // Es estado, no adorno: funciona también con movimiento reducido (el CSS quita el reenfoque).
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
+    const observers = Array.from(document.querySelectorAll<HTMLElement>('[data-story]')).map((story) => {
+      const steps = Array.from(story.querySelectorAll<HTMLElement>('[data-story-step]'));
+      const layers = Array.from(story.querySelectorAll<HTMLElement>('[data-story-layer]'));
+      let current = steps.find((step) => step.dataset.on === 'true')?.dataset.storyStep ?? '0';
+      const activate = (id: string) => {
+        if (id === current) return;
+        current = id;
+        steps.forEach((step) => {
+          step.dataset.on = String(step.dataset.storyStep === id);
+        });
+        layers.forEach((layer) => {
+          layer.dataset.on = String(layer.dataset.storyLayer === id);
+          layer.dispatchEvent(new Event('vp-layer'));
+        });
+      };
+      // Banda estrecha en el centro de la ventana: solo un paso la cruza a la vez
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) activate((entry.target as HTMLElement).dataset.storyStep ?? '0');
+          }
+        },
+        { rootMargin: '-48% 0px -48% 0px' },
+      );
+      steps.forEach((step) => io.observe(step));
+      return io;
+    });
+    return () => observers.forEach((io) => io.disconnect());
+  }, [pathname]);
+
+  // La entrada del render del hero se ve una vez por visita: al volver a la portada, la imagen ya está "renderizada"
+  useEffect(() => {
+    const root = document.documentElement;
+    if (root.classList.contains('intro-done') || !document.querySelector('[data-hero]')) return;
+    const id = window.setTimeout(() => root.classList.add('intro-done'), 2000);
+    return () => window.clearTimeout(id);
+  }, [pathname]);
+
   // Movimiento avanzado
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -232,6 +274,25 @@ export function MotionProvider() {
             window.removeEventListener('pointermove', move);
             gsap.set(pointerTarget, { clearProps: 'transform' });
             orientGizmo(gizmo, GIZMO_YAW, GIZMO_PITCH);
+          });
+        }
+
+        // Contacto: la luz principal sigue al cursor con inercia, como reorientar un foco sobre la escena
+        const light = document.querySelector<HTMLElement>('[data-studio-light]');
+        const lightHost = light?.closest<HTMLElement>('section');
+        if (light && lightHost) {
+          const lx = gsap.quickTo(light, 'xPercent', { duration: 2.4, ease: 'power3' });
+          const ly = gsap.quickTo(light, 'yPercent', { duration: 2.4, ease: 'power3' });
+          const onLight = (e: PointerEvent) => {
+            const r = lightHost.getBoundingClientRect();
+            // La luz mide el 60 % del ancho y reposa con su centro al 72 %: se desplaza hacia el cursor sin salir de la sección
+            lx(gsap.utils.clamp(-75, 33, (((e.clientX - r.left) / r.width - 0.72) / 0.6) * 100));
+            ly(gsap.utils.clamp(0, 25, ((e.clientY - r.top) / r.height) * 30));
+          };
+          lightHost.addEventListener('pointermove', onLight, { passive: true });
+          cleanups.push(() => {
+            lightHost.removeEventListener('pointermove', onLight);
+            gsap.set(light, { clearProps: 'transform' });
           });
         }
 

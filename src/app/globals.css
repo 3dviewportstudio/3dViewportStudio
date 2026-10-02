@@ -224,8 +224,8 @@ html.lenis body {
   color: var(--color-fg);
   border: 1px solid var(--color-line-strong);
   background: rgb(20 21 23 / 0.4);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 .btn-sm {
   --btn-h: 40px;
@@ -439,10 +439,10 @@ html.lenis body {
 /* Revelado al hacer scroll (solo si el usuario no pide reducir el movimiento) */
 .motion-ok [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, 16px, 0);
   transition:
-    opacity 800ms var(--ease-out),
-    transform 900ms var(--ease-out);
+    opacity 650ms var(--ease-out),
+    transform 750ms var(--ease-out);
   transition-delay: calc(var(--d, 0) * 60ms);
 }
 .motion-ok [data-reveal].is-in {
@@ -459,17 +459,76 @@ html.lenis body {
 .hero-media {
   clip-path: inset(0 0 0 0 round 0);
 }
-.motion-ok .hero-media {
-  animation: hero-aperture 1.4s var(--ease-out-expo) 0.1s both;
+/* Entrada del render: la imagen se resuelve por cuadrículas desde el producto hacia fuera, como la ventana de render
+ * de Cycles, con las esquinas ámbar en la cuadrícula activa. Es el único momento llamativo de la página.
+ * Solo CSS: corre desde el primer pintado (sin esperar a JS) y la imagen ya está pintada debajo (no retrasa el LCP).
+ * Las celdas solo animan opacidad; al terminar, la capa se oculta. Sin `motion-ok` (movimiento reducido o sin JS) no existe. */
+.render-tiles {
+  display: none;
 }
-@keyframes hero-aperture {
-  from {
-    clip-path: inset(14% 10% 14% 10% round 28px);
-    transform: scale(1.06);
+.motion-ok:not(.intro-done) .render-tiles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  pointer-events: none;
+  animation: tiles-done 0s linear 1.8s forwards;
+}
+.render-tiles span {
+  position: relative;
+  background: #000;
+  animation: tile-render 380ms linear var(--t) both;
+}
+.render-tiles span::after {
+  --c: rgb(255 166 64 / 0.85);
+  content: '';
+  position: absolute;
+  inset: 5px;
+  background:
+    linear-gradient(var(--c), var(--c)) 0 0 / 10px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 0 / 1.5px 10px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / 10px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / 1.5px 10px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / 10px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / 1.5px 10px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 10px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 1.5px 10px no-repeat;
+  animation: tile-active 380ms linear var(--t) both;
+}
+@keyframes tile-render {
+  0%,
+  58% {
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes tile-active {
+  0% {
+    opacity: 0;
+  }
+  20%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes tiles-done {
   to {
-    clip-path: inset(0 0 0 0 round 0);
-    transform: none;
+    visibility: hidden;
+  }
+}
+@media (max-width: 767px) {
+  .motion-ok:not(.intro-done) .render-tiles--desktop {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .motion-ok:not(.intro-done) .render-tiles--mobile {
+    display: none;
   }
 }
 
@@ -526,8 +585,8 @@ html.lenis body {
   border-radius: 999px;
   background: rgb(20 21 23 / 0.45);
   border: 1px solid var(--color-line);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 .gizmo svg {
   position: absolute;
@@ -548,8 +607,8 @@ html.lenis body {
   background: rgb(27 29 32 / 0.72);
   border-color: var(--color-line);
   box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
 }
 .site-header[data-menu='true'] .nav-shell {
   background: var(--color-bg-2);
@@ -733,6 +792,72 @@ html.lenis body {
   }
 }
 
+/* ───────────────────────── Servicios: visor fijo (scroll storytelling) ─────────────────────────
+ * Escritorio con JS: el visor queda fijo y cambia de plano según el servicio que se lee; los demás se atenúan.
+ * Móvil o sin JS: cada servicio lleva su propia pieza (.story-inline) y no hay visor.
+ * "Con JS" = el script del <head> ha puesto motion-ok o motion-reduce en <html>.
+ */
+.story-stage {
+  display: none;
+}
+.story-layer {
+  position: absolute;
+  inset: 0;
+  transition:
+    opacity 450ms ease,
+    visibility 0s linear 0s;
+}
+/* Fuera de plano: invisible y fuera del orden de tabulación (visibility) cuando termina el fundido */
+.story-layer[data-on='false'] {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 350ms ease,
+    visibility 0s linear 350ms;
+}
+/* Cambio de plano: la cámara reenfoca el nuevo encuadre */
+.motion-ok .story-layer[data-on='true'] .story-shot {
+  animation: lens-focus 900ms var(--ease-out-expo) both;
+}
+@keyframes lens-focus {
+  from {
+    filter: blur(12px);
+    scale: 1.06;
+  }
+  to {
+    filter: blur(0);
+    scale: 1;
+  }
+}
+@media (min-width: 1024px) {
+  :where(.motion-ok, .motion-reduce) .story-stage {
+    display: block;
+  }
+  :where(.motion-ok, .motion-reduce) .story-inline {
+    display: none;
+  }
+  /* Visor centrado en la ventana y limitado por su altura (4:5) */
+  .story-stage-inner {
+    --stage-h: min(calc(100svh - var(--header-h) - 5rem), 880px);
+    position: sticky;
+    top: calc(var(--header-h) + (100svh - var(--header-h) - var(--stage-h)) / 2);
+    width: min(100%, calc(var(--stage-h) * 0.8));
+  }
+  :where(.motion-ok, .motion-reduce) .story-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 78svh;
+    border-top: 0;
+    padding-block: 0;
+    transition: opacity 500ms var(--ease-out);
+  }
+  /* Atenuado mínimo que mantiene el contraste AA del texto secundario (fg-2 sobre bg ≥ 4,5:1 desde 0,71) */
+  :where(.motion-ok, .motion-reduce) .story-step[data-on='false']:not(:focus-within) {
+    opacity: 0.75;
+  }
+}
+
 /* ───────────────────────── Formulario ───────────────────────── */
 .field-label {
   display: block;
@@ -879,6 +1004,86 @@ textarea.field {
 .cursor-label[data-visible='true'] {
   opacity: 1;
   scale: 1;
+}
+
+/* ───────────────────────── Transiciones entre páginas (View Transitions) ─────────────────────────
+ * La página saliente se va rápido para no competir; la nueva llega algo después y con un leve ascenso.
+ * La pieza compartida viaja con la curva de cajón de iOS y un desenfoque mínimo a mitad de camino
+ * que disimula el reescalado. La cabecera es el ancla fija: ni se mueve ni se funde.
+ */
+::view-transition {
+  pointer-events: none;
+}
+/* Marcador que activa la transición en cada cambio de página: no se ve ni se anima */
+.vt-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+::view-transition-group(.page) {
+  animation: none;
+}
+::view-transition-old(.page),
+::view-transition-new(.page) {
+  animation: none;
+  opacity: 0;
+}
+/* Captura raíz (la ventana): sale rápido, la nueva llega con un leve ascenso */
+::view-transition-old(root) {
+  animation: 180ms cubic-bezier(0.23, 1, 0.32, 1) both vt-fade-out;
+}
+::view-transition-new(root) {
+  animation: 460ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both vt-rise-in;
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+::view-transition-group(.morph) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: vt-via-blur;
+}
+@keyframes vt-via-blur {
+  35% {
+    filter: blur(3px);
+  }
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+/* Movimiento reducido: sin desplazamientos ni vuelos; solo un fundido corto entre páginas */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+  }
+  ::view-transition-new(root) {
+    animation: 200ms ease both vt-fade-in;
+  }
 }
 
 /* ───────────────────────── Movimiento reducido ─────────────────────────

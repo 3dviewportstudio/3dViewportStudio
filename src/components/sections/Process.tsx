@@ -48,7 +48,6 @@ export function Process({ locale }: { locale: Locale }) {
                       <dd className="mt-1.5 max-w-[52ch] text-fg-2">{step.get}</dd>
                     </div>
                   </dl>
-                  <p className="label-tech mt-5 !text-fg-3">{step.tags}</p>
                 </div>
               </li>
             ))}

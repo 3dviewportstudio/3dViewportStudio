@@ -40,6 +40,9 @@ export function VideoLoop({ asset, label, playLabel, pauseLabel, poster, hud, cl
     const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const autoplay = () => !reduceQuery.matches && !conn?.saveData;
+    // Dentro del visor de servicios, un plano oculto no reproduce (ni descarga) aunque esté "en pantalla"
+    const layer = v.closest<HTMLElement>('[data-story-layer]');
+    const onStage = () => !layer || layer.dataset.on !== 'false';
     let inView = false;
 
     const io = new IntersectionObserver(
@@ -47,7 +50,7 @@ export function VideoLoop({ asset, label, playLabel, pauseLabel, poster, hud, cl
         if (!entry) return;
         inView = entry.isIntersecting;
         if (inView) {
-          if (autoplay() && !userPaused.current) play();
+          if (onStage() && autoplay() && !userPaused.current) play();
         } else if (!v.paused) {
           v.pause();
         }
@@ -59,12 +62,23 @@ export function VideoLoop({ asset, label, playLabel, pauseLabel, poster, hud, cl
     // Si el usuario activa "reducir movimiento" con la página abierta, el vídeo se detiene (y puede reanudarlo con el botón)
     const onMotionChange = () => {
       if (reduceQuery.matches && !v.paused) v.pause();
-      else if (!reduceQuery.matches && inView && !userPaused.current) play();
+      else if (!reduceQuery.matches && inView && onStage() && !userPaused.current) play();
     };
     reduceQuery.addEventListener('change', onMotionChange);
+
+    // El visor avisa con `vp-layer` cuando este plano entra o sale de escena
+    const onLayer = () => {
+      if (!onStage()) {
+        if (!v.paused) v.pause();
+      } else if (inView && autoplay() && !userPaused.current) {
+        play();
+      }
+    };
+    layer?.addEventListener('vp-layer', onLayer);
     return () => {
       io.disconnect();
       reduceQuery.removeEventListener('change', onMotionChange);
+      layer?.removeEventListener('vp-layer', onLayer);
     };
   }, [play]);
 
