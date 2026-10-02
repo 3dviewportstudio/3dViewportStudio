@@ -12,7 +12,8 @@ type Props = {
   sizes: string;
   /** Relación de aspecto del visor; por defecto, la del archivo. */
   ratio?: string;
-  parallax?: boolean;
+  /** `true` = recorrido por defecto (5 %); un número fija el recorrido (negativo = sentido contrario). */
+  parallax?: boolean | number;
   interactive?: boolean;
   showCaption?: boolean;
   className?: string;
@@ -62,7 +63,7 @@ export function Media({ item, locale, sizes, ratio, parallax = false, interactiv
       hud={showCaption ? item.caption[locale] : undefined}
     >
       {parallax ? (
-        <div className="parallax-inner" data-parallax="5">
+        <div className="parallax-inner" data-parallax={parallax === true ? 5 : parallax}>
           {picture}
         </div>
       ) : (

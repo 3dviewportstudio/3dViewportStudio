@@ -38,9 +38,10 @@ function toRows(items: GalleryItem[]): Row[] {
   return rows;
 }
 
-function GalleryRow({ row, locale }: { row: Row; locale: Locale }) {
+function GalleryRow({ row, locale, expand = false }: { row: Row; locale: Locale; expand?: boolean }) {
   if (row.kind === 'wide') {
-    return <Media item={row.items[0]} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" showCaption />;
+    const wide = <Media item={row.items[0]} locale={locale} sizes="(min-width: 1440px) 1344px, 94vw" showCaption />;
+    return expand ? <div data-scale-in>{wide}</div> : wide;
   }
   if (row.kind === 'pair') {
     return (
@@ -140,7 +141,7 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
         {rest.length > 0 ? (
           <section aria-label={c.gallery} className="container-x flex flex-col gap-10 md:gap-16">
             {rest.map((row, i) => (
-              <GalleryRow key={i} row={row} locale={locale} />
+              <GalleryRow key={i} row={row} locale={locale} expand />
             ))}
           </section>
         ) : null}

@@ -69,6 +69,8 @@ export function MotionProvider() {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')]);
       if (disposed) return;
       gsap.registerPlugin(ScrollTrigger);
+      // En móvil la barra de direcciones cambia la altura al hacer scroll: no recalcular en cada cambio
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       if (finePointer) {
         const { default: Lenis } = await import('lenis');
@@ -86,10 +88,17 @@ export function MotionProvider() {
         });
       }
 
-      const ctx = gsap.context(() => {
-        // Parallax de medios dentro de su visor
+      // Escritorio y móvil se configuran por separado; matchMedia las recrea al cruzar el breakpoint
+      // (por ejemplo al girar el dispositivo o redimensionar la ventana) y las revierte al desmontar.
+      const mm = gsap.matchMedia();
+      mm.add({ desktop: '(min-width: 768px)', mobile: '(max-width: 767px)' }, (mmCtx) => {
+        const desktop = Boolean(mmCtx.conditions?.desktop);
+        // En móvil los desplazamientos se reducen a la mitad
+        const k = desktop ? 1 : 0.5;
+
+        // Parallax de medios dentro de su visor (data-parallax = % de recorrido; negativo = sentido contrario)
         gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
-          const amount = parseFloat(el.dataset.parallax || '6');
+          const amount = parseFloat(el.dataset.parallax || '6') * k;
           gsap.fromTo(
             el,
             { yPercent: -amount },
@@ -109,22 +118,25 @@ export function MotionProvider() {
           const tl = gsap.timeline({
             scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
           });
-          if (media) tl.to(media, { yPercent: 10, scale: 1.05, ease: 'none' }, 0);
+          if (media) tl.to(media, { yPercent: 10 * k, scale: 1 + 0.05 * k, ease: 'none' }, 0);
           if (copyEls.length) tl.to(copyEls, { y: -60, opacity: 0, ease: 'none' }, 0);
         }
 
-        // Piezas panorámicas: crecen al entrar y se oscurecen al salir por arriba
+        // Imágenes principales: el encuadre se abre desde un marco compacto hasta ocupar todo su ancho,
+        // mientras la imagen se asienta (zoom 1.14 → 1). El marco se escala entero, así que la proporción
+        // no cambia y, al terminar, la imagen se ve completa. Al salir por arriba se atenúa (solo escritorio).
         gsap.utils.toArray<HTMLElement>('[data-scale-in]').forEach((el) => {
-          gsap.fromTo(
-            el,
-            { scale: 0.9, transformOrigin: '50% 100%' },
-            { scale: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 35%', scrub: true } },
-          );
-          gsap.fromTo(
-            el,
-            { opacity: 1 },
-            { opacity: 0.3, ease: 'none', immediateRender: false, scrollTrigger: { trigger: el, start: 'bottom 45%', end: 'bottom top', scrub: true } },
-          );
+          const trigger = { trigger: el, start: 'top bottom', end: desktop ? 'top 30%' : 'top 45%', scrub: true };
+          gsap.fromTo(el, { scale: desktop ? 0.84 : 0.94 }, { scale: 1, ease: 'none', scrollTrigger: trigger });
+          const inner = el.querySelector<HTMLElement>('.vp-media > :first-child:not([data-parallax])');
+          if (inner) gsap.fromTo(inner, { scale: desktop ? 1.14 : 1.06 }, { scale: 1, ease: 'none', scrollTrigger: trigger });
+          if (desktop) {
+            gsap.fromTo(
+              el,
+              { opacity: 1 },
+              { opacity: 0.3, ease: 'none', immediateRender: false, scrollTrigger: { trigger: el, start: 'bottom 45%', end: 'bottom top', scrub: true } },
+            );
+          }
         });
 
         // Línea vertical del proceso: avanza con los pasos
@@ -169,7 +181,7 @@ export function MotionProvider() {
           );
         });
       });
-      cleanups.push(() => ctx.revert());
+      cleanups.push(() => mm.revert());
 
       if (finePointer) {
         // Botones magnéticos

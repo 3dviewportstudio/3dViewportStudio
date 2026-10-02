@@ -69,7 +69,7 @@ export function Work({ locale }: { locale: Locale }) {
                     <CaseLink project={project} locale={locale} label={c.viewCase} />
                   </div>
                   <div className="grid grid-cols-2 gap-4 md:col-span-8 md:gap-6">
-                    <Media item={project.cover.primary} locale={locale} sizes="(min-width: 768px) 30vw, 46vw" interactive />
+                    <Media item={project.cover.primary} locale={locale} sizes="(min-width: 768px) 30vw, 46vw" interactive parallax={-3} />
                     <Media
                       item={project.cover.secondary}
                       locale={locale}

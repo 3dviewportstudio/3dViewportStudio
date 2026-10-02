@@ -425,7 +425,9 @@ html.lenis body {
 }
 
 /* Parallax: el contenido se escala para que el desplazamiento no deje huecos */
-[data-parallax] {
+.motion-ok [data-parallax],
+.motion-ok [data-scale-in],
+.motion-ok [data-scale-in] .vp-media > :first-child {
   will-change: transform;
 }
 .parallax-inner {
