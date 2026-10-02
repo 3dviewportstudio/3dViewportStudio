@@ -1,0 +1,129 @@
+{
+  "images": {
+    "fine-nipona-escena": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAQFAwb/xAAhEAACAgIBBQEBAAAAAAAAAAABAgADBBESBSExQVEyM//EABYBAQEBAAAAAAAAAAAAAAAAAAECAP/EABgRAQEBAQEAAAAAAAAAAAAAAAEAEQIh/9oADAMBAAIRAxEAPwDhsjGRaiV8xJa9efM616sHMr0mkPyTMjp70klQGWSdVPNF0d94RywVDtYhUwjsZXsyvGehr6G4kehJtXUbVHFhyWYtVelLE8gvyZ1swxi2pIDU6TN1tGQpJADQiNlJKB1Pcwh5OM/l9QZlNa1kKR7EnqzmgqAfPidDm1oH/IiBVRvQERhNl6qw1QB3y+QmuP8A037hMtgv/9k="
+    },
+    "fine-nipona-matcha": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAUGAwIH/8QAIxAAAQMEAgIDAQAAAAAAAAAAAQACAwQFBhEhMRITFRZBJP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCPtOOPuNN7hIGph9JmPUwTDC5f4fBw6Kq2yN2AANlB5rd8ZltlL73SBwQqrOzq1Na0ckoQLsecIAR0FUQTMJ2OSo+1S+MipqV/IIaAgyyUNnpowQhcZG8sbED+oQRtNcI6eUeRT2LIaNrQS47H4oc8u5WsQ5QVFyvHyMoIGmNGghJYekIP/9k="
+    },
+    "fine-nipona-mulberry": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAQDBQYBAv/EACIQAAICAgICAgMAAAAAAAAAAAECAAMEERMhBRIxQQYzUf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwDEVWgnQJj2Ill7+lfZlMh9X3LvwzrXZykkAGFk09kYtuIgN51uE9/kXlEuorqqGyR2YQjJWA8jKB8R/wAaHfdeidxOx+PKYj+xrGzuK0Oinf3AlyEdcitHH3CcsvbIz63YaG4QK3KOspjCp2ZtbAhlfuMhHzAfxvZste9gQkmEAOwIQP/Z"
+    },
+    "fine-nipona-gama": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAMBAgYEBf/EACMQAAIBBAIBBQEAAAAAAAAAAAABAwIEERIFMSEGExUiQWH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDEJk5OqDi7yeJSRxN0vpnPcxSW1ek1OtRGlGwFe5S3hMAN96fnXwNLfdJl+Ylpn5X7dPwU4/n5LOydtplP9PLuLiqeZyPvIRM0KpmraxhPwAqqRvP9ABOwbC8hkBmwCwKP/9k="
+    },
+    "pphone-lila": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGwABAAICAwAAAAAAAAAAAAAAAAEGAgMEBQf/xAAiEAACAgIBAwUAAAAAAAAAAAAAAQIDBBESBQZBExQjMXH/xAAYAQACAwAAAAAAAAAAAAAAAAAAAQIDBP/EABgRAAMBAQAAAAAAAAAAAAAAAAABAgMx/9oADAMBAAIRAxEAPwDzAEpbaRY+n9tRzMV2etxklvQ1LfCUy64VsG7Lo9tkzq3vi9bAiJjSvlj+luq6iqsVxgtJRKhW+M02dgr1KqS5eC/KlKZoxpSmcHJsduROb8sGt/bBQzOwNkEgBAAAD//Z"
+    },
+    "pphone-verde": {
+      "width": 1920,
+      "height": 1080,
+      "widths": [
+        960,
+        1440,
+        1920
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAOABgDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAMCBQYH/8QAHhAAAQQCAwEAAAAAAAAAAAAAAQACAwQGEhExUSH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAZEQEAAgMAAAAAAAAAAAAAAAAAAQIRElH/2gAMAwEAAhEDEQA/AOYJ9OET2WRuPAce0hSjeY3h7ewkjaUMYpykBz9j4hUNfILVY7RfHeoWGl+pxL//2Q=="
+    },
+    "fine-nipona-matcha-film-poster": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGgABAQACAwAAAAAAAAAAAAAABgAFBwEDBP/EACEQAAEEAgIDAQEAAAAAAAAAAAEAAgMEBQYREiExQVET/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDWCks1jEVb9VzpW9nArPDV6H2JBrVSYbRhalCiJIWdXEqQd2lu6NewlLGkmQFx8ITrkgZMQTxyl8BD3gclFYrd2d6kbP0qXO3Hj+TD+KRBLF5CKtYBefCX0s3SbK17phwtct9r0xBAq2TKQZC0DXPLW/VI+30pB//Z"
+    },
+    "fine-nipona-gama-film-poster": {
+      "width": 1080,
+      "height": 1920,
+      "widths": [
+        480,
+        720,
+        1080
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAArABgDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAECAwQFBgf/xAAiEAACAgICAgIDAAAAAAAAAAAAAQIDBBEFEiExBhUiQWH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDiEx7Mujic2+pWV1NxfpmLk02Ys+l0dSI0g2BU7Yt62AHoHA3r6CDfuJyvMWxu5b8vT8C4/wCQTxMF43Ta/TNVkZEr7nY/D2VDvpUbpta1F+AKpWt7/oEFHYOxAYEtgQYAf//Z"
+    },
+    "pphone-17-film-poster": {
+      "width": 1920,
+      "height": 1080,
+      "widths": [
+        960,
+        1440,
+        1920
+      ],
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAOABgDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQCBgf/xAAhEAACAgIBBAMAAAAAAAAAAAABAgADBBEFEhMVISJBcf/EABcBAAMBAAAAAAAAAAAAAAAAAAECAwT/xAAaEQEAAwADAAAAAAAAAAAAAAABAAIRAzFB/9oADAMBAAIRAxEAPwDPvGXK4V/WxGauLRqTtvnvQjufae6v5EqMxlvVdfctyUK007iul08kr+AvratUIYuISxYFxsyx1DehCZqKmsJP/9k="
+    }
+  },
+  "videos": {
+    "fine-nipona-matcha-film": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 24,
+      "duration": 12,
+      "poster": "fine-nipona-matcha-film-poster",
+      "sources": {
+        "full": "/media/video/fine-nipona-matcha-film-1080.mp4",
+        "small": "/media/video/fine-nipona-matcha-film-720.mp4"
+      }
+    },
+    "fine-nipona-gama-film": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 24,
+      "duration": 10,
+      "poster": "fine-nipona-gama-film-poster",
+      "sources": {
+        "full": "/media/video/fine-nipona-gama-film-1080.mp4",
+        "small": "/media/video/fine-nipona-gama-film-720.mp4"
+      }
+    },
+    "pphone-17-film": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "duration": 14.2,
+      "poster": "pphone-17-film-poster",
+      "sources": {
+        "full": "/media/video/pphone-17-film-1080.mp4",
+        "small": "/media/video/pphone-17-film-720.mp4"
+      }
+    }
+  }
+}

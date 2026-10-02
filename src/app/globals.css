@@ -1,0 +1,917 @@
+@import 'tailwindcss';
+
+/* ───────────────────────── Tokens ─────────────────────────
+ * La web es el viewport de Blender del estudio:
+ * - Grafito de la interfaz (no negro puro) para que los renders, que sí tienen fondo negro, se lean como piezas enmarcadas.
+ * - Ámbar = "selección": el color del objeto activo en Blender. Marca hover, foco, estado activo y la acción principal.
+ * - Rojo, verde y azul solo para los ejes X, Y y Z del gizmo 3D.
+ */
+@theme {
+  --color-bg: #141517;
+  --color-bg-2: #1b1d20;
+  --color-bg-3: #24272b;
+  --color-fg: #f1efea;
+  --color-fg-2: #a9abaf;
+  --color-fg-3: #8c8f94;
+  --color-line: rgb(241 239 234 / 0.1);
+  --color-line-strong: rgb(241 239 234 / 0.2);
+  --color-accent: #ffa640;
+  --color-accent-2: #ffbf78;
+  --color-accent-ink: #1c1206;
+  --color-axis-x: #f0506e;
+  --color-axis-y: #8ccf3f;
+  --color-axis-z: #4d8ef2;
+  --color-danger: #ff7a7a;
+  --color-ok: #7ee2a0;
+
+  --radius-media: 18px;
+
+  /* Curvas: salida fuerte para interfaz, entrada-salida para movimiento en pantalla, cajón tipo iOS */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --breakpoint-xs: 30rem;
+}
+
+@theme inline {
+  --font-display: var(--font-satoshi, var(--font-geist-sans)), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  :root {
+    --header-h: 76px;
+    --gutter: clamp(16px, 4vw, 48px);
+    --section-y: clamp(112px, 14vw, 208px);
+    color-scheme: dark;
+    interpolate-size: allow-keywords;
+  }
+
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+
+  html.motion-ok:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  /* El foco se dibuja como la selección de Blender: contorno ámbar */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  button,
+  [role='button'],
+  a.btn {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Lenis (scroll suave en escritorio) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ───────────────────────── Utilidades ───────────────────────── */
+@utility container-x {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* Etiqueta discreta: en caja normal, sin espaciado forzado */
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--color-fg-2);
+}
+
+/* Datos técnicos reales (resolución, fps, duración) */
+@utility label-tech {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-2);
+}
+
+@utility h-section {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+@utility text-lead {
+  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--color-fg-2);
+}
+
+/* ───────────────────────── Componentes ───────────────────────── */
+
+/* Botones
+ * - Al pulsar se hunden un 3 % (propiedad `scale`, independiente del `transform` que usan los botones magnéticos).
+ * - Transiciones de propiedades concretas y por debajo de 200 ms.
+ * - El hover solo existe con ratón: en táctil no se queda "pegado".
+ */
+.btn {
+  --btn-h: 52px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: var(--btn-h);
+  padding-inline: 1.5rem;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    scale 160ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.btn:active {
+  scale: 0.97;
+}
+.btn svg {
+  flex-shrink: 0;
+  transition: translate 200ms var(--ease-out);
+}
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  cursor: progress;
+}
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    0 12px 32px -14px rgb(255 166 64 / 0.7);
+}
+.btn-ghost {
+  color: var(--color-fg);
+  border: 1px solid var(--color-line-strong);
+  background: rgb(20 21 23 / 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.btn-sm {
+  --btn-h: 40px;
+  padding-inline: 1.1rem;
+  font-size: 0.875rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover svg {
+    translate: 3px 0;
+  }
+  .btn-primary:hover {
+    background: #ffb35c;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.45),
+      0 16px 40px -14px rgb(255 166 64 / 0.85);
+  }
+  .btn-ghost:hover {
+    border-color: rgb(241 239 234 / 0.45);
+    background: rgb(241 239 234 / 0.06);
+  }
+}
+
+/* Botón circular (menú, vídeo, copiar) */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-fg);
+  cursor: pointer;
+  transition:
+    scale 160ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+.icon-btn:active {
+  scale: 0.94;
+}
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    background: rgb(241 239 234 / 0.08);
+    border-color: rgb(241 239 234 / 0.4);
+  }
+}
+
+/* Cambio de contenido dentro de un botón: el desenfoque funde los dos estados en uno */
+.swap {
+  display: inline-grid;
+}
+.swap > * {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  transition:
+    opacity 200ms ease,
+    filter 200ms ease,
+    transform 200ms var(--ease-out);
+}
+.swap > [data-on='false'] {
+  opacity: 0;
+  filter: blur(4px);
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Enlace con subrayado animado */
+.link-u {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 300ms var(--ease-out);
+  padding-bottom: 2px;
+}
+.link-u:focus-visible {
+  background-size: 100% 1px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .link-u:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Marcador de sección: un pequeño encuadre de cámara con la etiqueta */
+.section-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-mark::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  background:
+    linear-gradient(var(--color-accent), var(--color-accent)) 0 0 / 5px 1.5px no-repeat,
+    linear-gradient(var(--color-accent), var(--color-accent)) 0 0 / 1.5px 5px no-repeat,
+    linear-gradient(var(--color-accent), var(--color-accent)) 100% 100% / 5px 1.5px no-repeat,
+    linear-gradient(var(--color-accent), var(--color-accent)) 100% 100% / 1.5px 5px no-repeat;
+}
+
+/* Marco "Viewport": esquinas del encuadre de cámara. Al pasar el ratón se cierran y se vuelven ámbar: objeto seleccionado. */
+.vp-frame {
+  position: relative;
+}
+.vp-corners {
+  position: absolute;
+  inset: calc(var(--vp-gap, 10px) * -1);
+  pointer-events: none;
+  z-index: 3;
+  transition: inset 450ms var(--ease-out);
+}
+.vp-corners span {
+  position: absolute;
+  width: var(--vp-size, 16px);
+  height: var(--vp-size, 16px);
+  border-color: var(--vp-color, rgb(241 239 234 / 0.5));
+  border-style: solid;
+  border-width: 0;
+  transition: border-color 250ms ease;
+}
+.vp-corners span:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-top-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.vp-corners span:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-top-width: 1.5px;
+  border-right-width: 1.5px;
+}
+.vp-corners span:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.vp-corners span:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 1.5px;
+  border-right-width: 1.5px;
+}
+.vp-interactive:focus-within .vp-corners,
+.vp-group:focus-within .vp-interactive .vp-corners {
+  inset: 12px;
+}
+.vp-interactive:focus-within .vp-corners span,
+.vp-group:focus-within .vp-interactive .vp-corners span {
+  border-color: var(--color-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vp-interactive:hover .vp-corners,
+  .vp-group:hover .vp-interactive .vp-corners {
+    inset: 12px;
+  }
+  .vp-interactive:hover .vp-corners span,
+  .vp-group:hover .vp-interactive .vp-corners span {
+    border-color: var(--color-accent);
+  }
+  .vp-interactive:hover .vp-media .vp-zoom,
+  .vp-group:hover .vp-interactive .vp-media .vp-zoom {
+    transform: scale(1.035);
+  }
+}
+
+.vp-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-bg-2);
+  /* Safari: recorta bien los hijos con transform dentro de esquinas redondeadas */
+  isolation: isolate;
+}
+.vp-media img,
+.vp-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vp-interactive .vp-media .vp-zoom {
+  transition: transform 900ms var(--ease-out);
+}
+
+.vp-hud {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: rgb(241 239 234 / 0.85);
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
+}
+
+/* Parallax: el contenido se escala para que el desplazamiento no deje huecos */
+[data-parallax] {
+  will-change: transform;
+}
+.parallax-inner {
+  position: absolute;
+  inset: -8% 0;
+  height: 116%;
+}
+
+/* Revelado al hacer scroll (solo si el usuario no pide reducir el movimiento) */
+.motion-ok [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 900ms var(--ease-out);
+  transition-delay: calc(var(--d, 0) * 60ms);
+}
+.motion-ok [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Texto que se ilumina al hacer scroll */
+.scrub-word {
+  display: inline;
+}
+
+/* ───────────────────────── Hero ───────────────────────── */
+.hero-media {
+  clip-path: inset(0 0 0 0 round 0);
+}
+.motion-ok .hero-media {
+  animation: hero-aperture 1.4s var(--ease-out-expo) 0.1s both;
+}
+@keyframes hero-aperture {
+  from {
+    clip-path: inset(14% 10% 14% 10% round 28px);
+    transform: scale(1.06);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+    transform: none;
+  }
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 0.8;
+}
+.wordmark-char {
+  display: inline-block;
+}
+.motion-ok .wordmark-char {
+  animation: char-rise 1s var(--ease-out-expo) both;
+  animation-delay: calc(0.3s + var(--i) * 30ms);
+}
+@keyframes char-rise {
+  from {
+    transform: translate3d(0, 105%, 0);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.wordmark-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.motion-ok .hero-fade {
+  animation: fade-up 900ms var(--ease-out) both;
+  animation-delay: calc(0.5s + var(--d, 0) * 70ms);
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ───────────────────────── Gizmo de navegación (ejes X, Y, Z) ───────────────────────── */
+.gizmo {
+  position: relative;
+  width: var(--gizmo-size, 76px);
+  height: var(--gizmo-size, 76px);
+  border-radius: 999px;
+  background: rgb(20 21 23 / 0.45);
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.gizmo svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+/* ───────────────────────── Cabecera: píldora flotante ───────────────────────── */
+.nav-shell {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+.site-header[data-scrolled='true'] .nav-shell {
+  background: rgb(27 29 32 / 0.72);
+  border-color: var(--color-line);
+  box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+.site-header[data-menu='true'] .nav-shell {
+  background: var(--color-bg-2);
+  border-color: var(--color-line);
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.9375rem;
+  color: var(--color-fg-2);
+  transition: color 200ms ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 200ms ease,
+    transform 200ms var(--ease-out);
+}
+.nav-link[aria-current] {
+  color: var(--color-fg);
+}
+.nav-link[aria-current]::after {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: var(--color-fg);
+  }
+}
+
+/* Menú móvil: cajón que baja desde la cabecera */
+.menu-panel {
+  transition:
+    opacity 250ms ease,
+    transform 350ms var(--ease-drawer),
+    visibility 350ms;
+}
+.menu-panel[data-open='false'] {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0);
+  visibility: hidden;
+  transition-duration: 200ms;
+}
+.menu-panel .menu-item {
+  transition:
+    transform 400ms var(--ease-out),
+    opacity 300ms ease;
+  transition-delay: calc(60ms + var(--i, 0) * 35ms);
+}
+.menu-panel[data-open='false'] .menu-item {
+  transform: translate3d(0, 14px, 0);
+  opacity: 0;
+  transition-delay: 0ms;
+  transition-duration: 150ms;
+}
+
+/* ───────────────────────── Preguntas frecuentes ───────────────────────── */
+.faq-item summary {
+  transition: color 200ms ease;
+}
+.faq-icon {
+  transition:
+    transform 250ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+.faq-item summary:active .faq-icon {
+  scale: 0.92;
+}
+/* Apertura fluida donde el navegador lo permite (::details-content); en el resto se abre al instante */
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 300ms var(--ease-out),
+    content-visibility 300ms allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+@media (hover: hover) and (pointer: fine) {
+  .faq-item summary:hover .faq-icon {
+    border-color: rgb(241 239 234 / 0.45);
+  }
+}
+
+/* ───────────────────────── Estudio de variantes 3D ───────────────────────── */
+.studio-stage {
+  background:
+    radial-gradient(70% 55% at 50% 42%, rgb(255 166 64 / 0.1), transparent 70%),
+    radial-gradient(120% 90% at 50% 100%, #25282c 0%, var(--color-bg-2) 55%, #17181b 100%);
+  touch-action: pan-y;
+  cursor: grab;
+}
+.studio-stage[data-dragging='true'] {
+  cursor: grabbing;
+}
+.studio-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+.studio-stage[data-ready='true'] canvas {
+  opacity: 1;
+}
+.studio-stage[data-ready='true'] .studio-poster {
+  opacity: 0;
+}
+.studio-poster {
+  transition: opacity 500ms ease;
+}
+
+.swatch {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: scale 160ms var(--ease-out);
+}
+.swatch::before {
+  content: '';
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--swatch);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.4),
+    inset 0 -2px 4px rgb(0 0 0 / 0.25);
+}
+.swatch::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  transition:
+    border-color 200ms ease,
+    inset 200ms var(--ease-out);
+}
+.swatch[aria-checked='true']::after {
+  border-color: var(--color-accent);
+  inset: 2px;
+}
+.swatch:active {
+  scale: 0.92;
+}
+.swatch[aria-disabled='true'] {
+  cursor: default;
+  opacity: 0.5;
+}
+@media (hover: hover) and (pointer: fine) {
+  .swatch:not([aria-checked='true']):hover::after {
+    border-color: var(--color-line-strong);
+  }
+}
+
+/* ───────────────────────── Formulario ───────────────────────── */
+.field-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-fg-2);
+  margin-bottom: 0.5rem;
+}
+.field {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-fg);
+  font: inherit;
+  /* 16 px: evita el zoom automático de iOS al enfocar */
+  font-size: 1rem;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.field::placeholder {
+  color: var(--color-fg-3);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgb(255 166 64 / 0.22);
+  background: var(--color-bg-3);
+}
+.field[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+.field[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px rgb(255 122 122 / 0.22);
+}
+@media (hover: hover) and (pointer: fine) {
+  .field:hover:not(:focus) {
+    border-color: rgb(241 239 234 / 0.34);
+  }
+}
+select.field {
+  appearance: none;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-fg-2) 50%),
+    linear-gradient(135deg, var(--color-fg-2) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 16px) 50%;
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.75rem;
+}
+select.field option {
+  background: var(--color-bg-2);
+  color: var(--color-fg);
+}
+textarea.field {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Casilla de consentimiento */
+.check {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-line-strong);
+  background: var(--color-bg-2);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    scale 160ms var(--ease-out);
+}
+.check::after {
+  content: '';
+  width: 10px;
+  height: 6px;
+  margin-top: -2px;
+  border-left: 2px solid var(--color-accent-ink);
+  border-bottom: 2px solid var(--color-accent-ink);
+  transform: rotate(-45deg) scale(0.6);
+  opacity: 0;
+  transition:
+    opacity 150ms ease,
+    transform 200ms var(--ease-out);
+}
+.check:checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.check:checked::after {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+}
+.check:active {
+  scale: 0.9;
+}
+.check[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+/* Entrada del mensaje de estado del formulario */
+.status-in {
+  transition:
+    opacity 250ms ease,
+    transform 300ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+/* Cursor con etiqueta ("Ver caso") en escritorio */
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0;
+  scale: 0.85;
+  transition:
+    opacity 180ms ease,
+    scale 220ms var(--ease-out);
+}
+.cursor-label[data-visible='true'] {
+  opacity: 1;
+  scale: 1;
+}
+
+/* ───────────────────────── Movimiento reducido ─────────────────────────
+ * Menos movimiento, no cero: se mantienen los cambios de color y opacidad que ayudan a entender el estado,
+ * y se eliminan desplazamientos, escalados y animaciones largas.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .btn:active,
+  .icon-btn:active,
+  .swatch:active,
+  .check:active {
+    scale: 1;
+  }
+  .vp-corners,
+  .vp-interactive .vp-media .vp-zoom,
+  .menu-panel,
+  .menu-panel .menu-item,
+  .faq-icon,
+  .swap > * {
+    transition-property: opacity, color, background-color, border-color;
+  }
+  .menu-panel[data-open='false'],
+  .menu-panel[data-open='false'] .menu-item,
+  .swap > [data-on='false'] {
+    transform: none;
+    filter: none;
+  }
+  .faq-item::details-content {
+    transition: none;
+  }
+}
