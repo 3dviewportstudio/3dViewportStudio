@@ -13,3 +13,6 @@ npm-debug.log*
 verificacion.log
 informes/
 rerun.txt
+
+# Impeccable engine binary (platform-specific, fetched on demand by the skill launcher)
+.claude/skills/impeccable/scripts/bin/
