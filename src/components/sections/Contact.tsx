@@ -10,7 +10,7 @@ export function Contact({ locale }: { locale: Locale }) {
   return (
     <section id={sectionIds[locale].contact} aria-labelledby="contact-title" className="section-y relative isolate border-t border-line">
       {/* Luz principal ámbar sobre la zona de contacto */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[70%] bg-[radial-gradient(55%_60%_at_72%_0%,rgb(255_166_64/0.12),transparent_70%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[70%] bg-[radial-gradient(55%_60%_at_72%_0%,rgb(47_107_255/0.14),transparent_70%)]" />
       <div className="container-x grid gap-14 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-5">
           <SectionLabel>{c.label}</SectionLabel>

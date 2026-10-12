@@ -74,7 +74,7 @@ export function Gizmo({ className = '', size = 76, yaw = GIZMO_YAW, pitch = GIZM
           n.positive ? (
             <g key={n.id} data-axis={n.id} transform={`translate(${n.x} ${n.y})`}>
               <circle r="0.24" fill={color(n.key)} />
-              <text y="0.085" textAnchor="middle" fontSize="0.26" fontWeight="700" fill="#141517" style={{ fontFamily: 'var(--font-sans)' }}>
+              <text y="0.085" textAnchor="middle" fontSize="0.26" fontWeight="700" fill="#0a0a0b" style={{ fontFamily: 'var(--font-sans)' }}>
                 {label(n.key)}
               </text>
             </g>

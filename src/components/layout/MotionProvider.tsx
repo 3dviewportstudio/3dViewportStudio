@@ -141,6 +141,48 @@ export function MotionProvider() {
           );
         });
 
+        // Galería horizontal: en escritorio la sección se fija y el scroll vertical recorre la tira
+        gsap.utils.toArray<HTMLElement>('[data-hscroll]').forEach((section) => {
+          const track = section.querySelector<HTMLElement>('[data-hscroll-track]');
+          const bar = section.querySelector<HTMLElement>('[data-hscroll-progress]');
+          if (!track) return;
+          if (!finePointer) {
+            const vp = track.parentElement;
+            if (vp && vp.scrollWidth - vp.clientWidth < 40) section.classList.add('is-static');
+            // Táctil: scroll nativo; la barra sigue al desplazamiento horizontal
+            const viewport = track.parentElement;
+            if (viewport && bar) {
+              const sync = () => {
+                const max = viewport.scrollWidth - viewport.clientWidth;
+                gsap.set(bar, { scaleX: max > 0 ? Math.max(0.08, viewport.scrollLeft / max) : 1 });
+              };
+              viewport.addEventListener('scroll', sync, { passive: true });
+              cleanups.push(() => viewport.removeEventListener('scroll', sync));
+            }
+            return;
+          }
+          const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+          if (distance() < 40) {
+            section.classList.add('is-static');
+            cleanups.push(() => section.classList.remove('is-static'));
+            return;
+          }
+          section.classList.add('is-pinned');
+          cleanups.push(() => section.classList.remove('is-pinned'));
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'center center',
+              end: () => `+=${distance()}`,
+              pin: true,
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          });
+          tl.to(track, { x: () => -distance(), ease: 'none' }, 0);
+          if (bar) tl.fromTo(bar, { scaleX: 0.08 }, { scaleX: 1, ease: 'none' }, 0);
+        });
+
         // Frases que se iluminan palabra a palabra
         gsap.utils.toArray<HTMLElement>('[data-scrub-words]').forEach((el) => {
           gsap.fromTo(

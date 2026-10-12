@@ -44,7 +44,7 @@ export function Hero({ locale }: { locale: Locale }) {
 
         <h1 id="hero-title" className="mt-6 md:mt-8">
           <span className="sr-only">{site.name} — </span>
-          <span className="wordmark block text-[clamp(4.25rem,21vw,7rem)] md:whitespace-nowrap md:text-[clamp(4rem,11.2vw,12.5rem)]">
+          <span className="wordmark block whitespace-nowrap text-[clamp(3.25rem,16.5vw,7rem)] [font-stretch:100%] md:[font-stretch:125%] md:text-[clamp(4rem,11.2vw,12.5rem)]">
             <Chars text={WORD_A} offset={0} />
             <span className="block md:inline" />
             <Chars text={WORD_B} offset={WORD_A.length} dim />

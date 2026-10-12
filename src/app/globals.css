@@ -1,28 +1,29 @@
 @import 'tailwindcss';
 
 /* ───────────────────────── Tokens ─────────────────────────
- * La web es el viewport de Blender del estudio:
- * - Grafito de la interfaz (no negro puro) para que los renders, que sí tienen fondo negro, se lean como piezas enmarcadas.
- * - Ámbar = "selección": el color del objeto activo en Blender. Marca hover, foco, estado activo y la acción principal.
- * - Rojo, verde y azul solo para los ejes X, Y y Z del gizmo 3D.
+ * Paleta cerrada: negro, grises neutros y un único azul eléctrico (#2F6BFF). No se añaden otros colores.
+ * - Negro casi puro con grises sin tinte: los renders aportan el color, la interfaz no compite.
+ * - Azul = "selección": hover, foco, estado activo y la acción principal.
+ * - accent-2 es el azul aclarado para texto pequeño sobre negro (contraste AA).
+ * - Los ejes del gizmo se distinguen por tono (azul, gris claro, gris medio), no por color.
  */
 @theme {
-  --color-bg: #141517;
-  --color-bg-2: #1b1d20;
-  --color-bg-3: #24272b;
-  --color-fg: #f1efea;
-  --color-fg-2: #a9abaf;
-  --color-fg-3: #8c8f94;
-  --color-line: rgb(241 239 234 / 0.1);
-  --color-line-strong: rgb(241 239 234 / 0.2);
-  --color-accent: #ffa640;
-  --color-accent-2: #ffbf78;
-  --color-accent-ink: #1c1206;
-  --color-axis-x: #f0506e;
-  --color-axis-y: #8ccf3f;
-  --color-axis-z: #4d8ef2;
-  --color-danger: #ff7a7a;
-  --color-ok: #7ee2a0;
+  --color-bg: #0a0a0b;
+  --color-bg-2: #121214;
+  --color-bg-3: #1b1b1e;
+  --color-fg: #f2f2f3;
+  --color-fg-2: #a6a6ab;
+  --color-fg-3: #8a8a90;
+  --color-line: rgb(242 242 243 / 0.1);
+  --color-line-strong: rgb(242 242 243 / 0.2);
+  --color-accent: #2f6bff;
+  --color-accent-2: #7da2ff;
+  --color-accent-ink: #ffffff;
+  --color-axis-x: #2f6bff;
+  --color-axis-y: #d4d4d8;
+  --color-axis-z: #7a7a80;
+  --color-danger: #7da2ff;
+  --color-ok: #7da2ff;
 
   --radius-media: 18px;
 
@@ -36,7 +37,7 @@
 }
 
 @theme inline {
-  --font-display: var(--font-satoshi, var(--font-geist-sans)), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo, var(--font-geist-sans)), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
 }
@@ -88,8 +89,10 @@
 
   h1,
   h2,
-  h3 {
+  h3,
+  .font-display {
     font-family: var(--font-display);
+    font-stretch: 118%;
     text-wrap: balance;
   }
 
@@ -162,9 +165,10 @@ html.lenis body {
 @utility h-section {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-stretch: 118%;
+  font-size: clamp(2.125rem, 4.2vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
 }
 
 @utility text-lead {
@@ -218,12 +222,12 @@ html.lenis body {
   color: var(--color-accent-ink);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.35),
-    0 12px 32px -14px rgb(255 166 64 / 0.7);
+    0 12px 32px -14px rgb(47 107 255 / 0.7);
 }
 .btn-ghost {
   color: var(--color-fg);
   border: 1px solid var(--color-line-strong);
-  background: rgb(20 21 23 / 0.4);
+  background: rgb(10 10 11 / 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -237,14 +241,14 @@ html.lenis body {
     translate: 3px 0;
   }
   .btn-primary:hover {
-    background: #ffb35c;
+    background: #4a80ff;
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.45),
-      0 16px 40px -14px rgb(255 166 64 / 0.85);
+      0 16px 40px -14px rgb(47 107 255 / 0.85);
   }
   .btn-ghost:hover {
-    border-color: rgb(241 239 234 / 0.45);
-    background: rgb(241 239 234 / 0.06);
+    border-color: rgb(242 242 243 / 0.45);
+    background: rgb(242 242 243 / 0.06);
   }
 }
 
@@ -266,8 +270,8 @@ html.lenis body {
 }
 @media (hover: hover) and (pointer: fine) {
   .icon-btn:hover {
-    background: rgb(241 239 234 / 0.08);
-    border-color: rgb(241 239 234 / 0.4);
+    background: rgb(242 242 243 / 0.08);
+    border-color: rgb(242 242 243 / 0.4);
   }
 }
 
@@ -344,7 +348,7 @@ html.lenis body {
   position: absolute;
   width: var(--vp-size, 16px);
   height: var(--vp-size, 16px);
-  border-color: var(--vp-color, rgb(241 239 234 / 0.5));
+  border-color: var(--vp-color, rgb(242 242 243 / 0.5));
   border-style: solid;
   border-width: 0;
   transition: border-color 250ms ease;
@@ -420,7 +424,7 @@ html.lenis body {
   font-size: 0.6875rem;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
-  color: rgb(241 239 234 / 0.85);
+  color: rgb(242 242 243 / 0.85);
   text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
 }
 
@@ -473,9 +477,10 @@ html.lenis body {
 
 .wordmark {
   font-family: var(--font-display);
-  font-weight: 900;
-  letter-spacing: -0.055em;
-  line-height: 0.8;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
 }
 .wordmark-char {
   display: inline-block;
@@ -522,7 +527,7 @@ html.lenis body {
   width: var(--gizmo-size, 76px);
   height: var(--gizmo-size, 76px);
   border-radius: 999px;
-  background: rgb(20 21 23 / 0.45);
+  background: rgb(10 10 11 / 0.45);
   border: 1px solid var(--color-line);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -543,7 +548,7 @@ html.lenis body {
     box-shadow 300ms ease;
 }
 .site-header[data-scrolled='true'] .nav-shell {
-  background: rgb(27 29 32 / 0.72);
+  background: rgb(18 18 20 / 0.72);
   border-color: var(--color-line);
   box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
   backdrop-filter: blur(18px) saturate(140%);
@@ -652,15 +657,15 @@ html.lenis body {
 }
 @media (hover: hover) and (pointer: fine) {
   .faq-item summary:hover .faq-icon {
-    border-color: rgb(241 239 234 / 0.45);
+    border-color: rgb(242 242 243 / 0.45);
   }
 }
 
 /* ───────────────────────── Estudio de variantes 3D ───────────────────────── */
 .studio-stage {
   background:
-    radial-gradient(70% 55% at 50% 42%, rgb(255 166 64 / 0.1), transparent 70%),
-    radial-gradient(120% 90% at 50% 100%, #25282c 0%, var(--color-bg-2) 55%, #17181b 100%);
+    radial-gradient(70% 55% at 50% 42%, rgb(47 107 255 / 0.1), transparent 70%),
+    radial-gradient(120% 90% at 50% 100%, #1c1c1f 0%, var(--color-bg-2) 55%, #0d0d0f 100%);
   touch-action: pan-y;
   cursor: grab;
 }
@@ -760,18 +765,18 @@ html.lenis body {
 .field:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgb(255 166 64 / 0.22);
+  box-shadow: 0 0 0 3px rgb(47 107 255 / 0.22);
   background: var(--color-bg-3);
 }
 .field[aria-invalid='true'] {
   border-color: var(--color-danger);
 }
 .field[aria-invalid='true']:focus {
-  box-shadow: 0 0 0 3px rgb(255 122 122 / 0.22);
+  box-shadow: 0 0 0 3px rgb(125 162 255 / 0.25);
 }
 @media (hover: hover) and (pointer: fine) {
   .field:hover:not(:focus) {
-    border-color: rgb(241 239 234 / 0.34);
+    border-color: rgb(242 242 243 / 0.34);
   }
 }
 select.field {
@@ -879,6 +884,144 @@ textarea.field {
   scale: 1;
 }
 
+/* ───────────────────────── Galería horizontal ─────────────────────────
+ * Base (táctil, sin JS o movimiento reducido): tira con scroll horizontal nativo e imanes.
+ * Con .is-pinned (escritorio + movimiento), GSAP fija la sección y traslada la pista.
+ */
+.hscroll {
+  --strip-h: min(72svh, 760px);
+}
+.hscroll-viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+  padding-block: 16px;
+}
+.hscroll-track {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 32px);
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+.hscroll-item {
+  flex: none;
+  width: min(calc(var(--strip-h) * var(--ar)), 86vw);
+  scroll-snap-align: center;
+}
+.hscroll.is-pinned .hscroll-viewport {
+  overflow: visible;
+  scroll-snap-type: none;
+}
+.hscroll.is-pinned {
+  overflow: clip;
+}
+.hscroll.is-static .hscroll-hint {
+  display: none;
+}
+.hint-fine {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hscroll.is-pinned .hint-fine {
+    display: inline;
+  }
+  .hscroll.is-pinned .hint-touch {
+    display: none;
+  }
+}
+.hscroll-progress {
+  position: relative;
+  display: inline-block;
+  width: 72px;
+  height: 1.5px;
+  background: var(--color-line-strong);
+  overflow: hidden;
+}
+.hscroll-progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform-origin: left center;
+  transform: scaleX(0.08);
+}
+
+/* ───────────────────────── Comparador wireframe ↔ render ───────────────────────── */
+.compare-stage {
+  position: relative;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  user-select: none;
+}
+.compare-render {
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.compare-stage:not([data-dragging='true']) .compare-render,
+.compare-stage:not([data-dragging='true']) .compare-handle {
+  transition:
+    clip-path 450ms var(--ease-out),
+    left 450ms var(--ease-out);
+}
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 44px;
+  margin-left: -22px;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+.compare-handle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+  margin-left: -0.75px;
+  background: var(--color-fg);
+  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.3);
+}
+.compare-knob {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.7);
+  transition: scale 200ms var(--ease-out);
+}
+.compare-stage[data-dragging='true'] .compare-knob {
+  scale: 0.92;
+}
+.compare-handle:focus-visible .compare-knob {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 3px;
+}
+.compare-tag {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  pointer-events: none;
+}
+.compare-tag-l {
+  left: 16px;
+}
+.compare-tag-r {
+  right: 16px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .compare-stage:hover .compare-knob {
+    scale: 1.06;
+  }
+}
+
 /* ───────────────────────── Movimiento reducido ─────────────────────────
  * Menos movimiento, no cero: se mantienen los cambios de color y opacidad que ayudan a entender el estado,
  * y se eliminan desplazamientos, escalados y animaciones largas.
@@ -911,7 +1054,10 @@ textarea.field {
     transform: none;
     filter: none;
   }
-  .faq-item::details-content {
-    transition: none;
+  .faq-item::details-content,
+  .compare-render,
+  .compare-handle,
+  .compare-knob {
+    transition: none !important;
   }
 }

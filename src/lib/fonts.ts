@@ -3,20 +3,19 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 
 /**
- * Satoshi (Indian Type Foundry · Fontshare, gratuita para uso comercial) para titulares y logotipo,
- * subconjunto latino en WOFF2. Geist y Geist Mono para texto y datos técnicos.
- * Todas se sirven desde el propio dominio: sin peticiones a terceros.
+ * Archivo (Omnibus-Type, SIL Open Font License) para titulares y logotipo: grotesca variable con eje de anchura.
+ * Se usa expandida (wdth 112–125) para dar a los titulares el carácter de una pieza de hardware.
+ * Subconjunto latino y ejes recortados a wght 500–800 · wdth 100–125 (≈46 KB).
+ * Geist para texto y Geist Mono solo para datos técnicos reales. Todo se sirve desde el propio dominio.
  */
-const satoshi = localFont({
-  src: [
-    { path: '../fonts/Satoshi-Bold.woff2', weight: '700', style: 'normal' },
-    { path: '../fonts/Satoshi-Black.woff2', weight: '900', style: 'normal' },
-  ],
-  variable: '--font-satoshi',
+const archivo = localFont({
+  src: [{ path: '../fonts/Archivo-Variable.woff2', weight: '500 800', style: 'normal' }],
+  variable: '--font-archivo',
   display: 'swap',
   preload: true,
-  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
+  fallback: ['Arial', 'sans-serif'],
   adjustFontFallback: 'Arial',
+  declarations: [{ prop: 'font-stretch', value: '100% 125%' }],
 });
 
-export const fontVariables = `${satoshi.variable} ${GeistSans.variable} ${GeistMono.variable}`;
+export const fontVariables = `${archivo.variable} ${GeistSans.variable} ${GeistMono.variable}`;

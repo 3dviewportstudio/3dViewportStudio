@@ -23,6 +23,8 @@ export type Project = {
   /** Medios de la tarjeta en la home. */
   cover: { primary: GalleryItem; secondary?: GalleryItem; layout: 'pair' | 'wide' };
   gallery: GalleryItem[];
+  /** Comparador wireframe ↔ render: mismo encuadre y fotograma (ids del manifiesto de medios). Opcional. */
+  compare?: { wire: string; render: string; alt: L };
   ogImage: string;
 };
 

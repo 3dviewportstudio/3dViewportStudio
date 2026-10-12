@@ -6,6 +6,8 @@ import { JsonLd } from '@/components/layout/JsonLd';
 import { ArrowRight, ArrowUpRight } from '@/components/ui/Icons';
 import { Media } from '@/components/ui/Media';
 import { Picture } from '@/components/ui/Picture';
+import { Compare } from '@/components/ui/Compare';
+import { Filmstrip } from '@/components/ui/Filmstrip';
 import { routes, sectionHref, type Locale } from '@/lib/routes';
 import { projectJsonLd } from '@/lib/structured-data';
 
@@ -137,13 +139,24 @@ export function ProjectPage({ locale, project }: { locale: Locale; project: Proj
           </ol>
         </section>
 
-        {rest.length > 0 ? (
-          <section aria-label={c.gallery} className="container-x flex flex-col gap-10 md:gap-16">
-            {rest.map((row, i) => (
-              <GalleryRow key={i} row={row} locale={locale} />
-            ))}
+        {project.compare ? (
+          <section aria-labelledby="compare-title" className="container-x pb-[var(--section-y)]">
+            <h2 id="compare-title" className="h-section mb-10 max-w-[16ch] md:mb-14" data-reveal>
+              {c.compareTitle}
+            </h2>
+            <Compare
+              wireId={project.compare.wire}
+              renderId={project.compare.render}
+              wireLabel={c.compareWire}
+              renderLabel={c.compareRender}
+              sliderLabel={c.compareSlider}
+              alt={project.compare.alt[locale]}
+              sizes="(min-width: 1440px) 1344px, 94vw"
+            />
           </section>
         ) : null}
+
+        {rest.length > 0 ? <Filmstrip items={rest.flatMap((row) => row.items)} locale={locale} label={c.gallery} hint={{ scroll: c.galleryHint, swipe: c.gallerySwipe }} /> : null}
 
         <section className="container-x section-y">
           <div className="grid gap-12 border-t border-line pt-12 md:grid-cols-12 md:gap-8">

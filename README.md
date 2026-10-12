@@ -30,7 +30,7 @@ npm run dev                  # http://localhost:3000
 
 ## Tipografía
 
-- **Satoshi** (Indian Type Foundry, gratuita para uso comercial en [fontshare.com](https://www.fontshare.com/fonts/satoshi)) para titulares: `src/fonts/Satoshi-Bold.woff2` y `Satoshi-Black.woff2`, recortadas al alfabeto latino (≈18 KB cada una).
+- **Archivo** (Omnibus-Type, licencia SIL Open Font) para titulares, usada expandida: `src/fonts/Archivo-Variable.woff2`, variable, recortada al alfabeto latino y a los rangos usados (≈46 KB).
 - **Geist** y **Geist Mono** (paquete `geist`) para texto y datos técnicos.
 
 ## Variables de entorno
@@ -67,7 +67,7 @@ Cada consulta llega con el asunto «Nueva consulta web · Nombre (Marca)»: pued
 | Proyectos, galerías y testimonios | `src/content/projects.ts` |
 | Aviso legal y privacidad | `src/content/legal.ts` |
 | Email, herramientas, años de experiencia | `src/lib/site.ts` |
-| Colores, tipografías y estilos base | `src/app/globals.css` |
+| Colores (solo negro, grises y azul `#2F6BFF`), tipografías y estilos base | `src/app/globals.css` |
 
 **Testimonios:** la sección está oculta mientras la lista `testimonials` de `src/content/projects.ts` esté vacía. Cuando Fine Nipona te dé su cita (y permiso para publicarla), añádela ahí y aparecerá sola en la home.
 

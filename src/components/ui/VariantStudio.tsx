@@ -107,7 +107,7 @@ export function VariantStudio({ strings, posterAlt }: { strings: Strings; poster
   const ready = status === 'ready';
 
   return (
-    <div className="vp-frame" style={{ ['--vp-color' as string]: 'rgb(241 239 234 / 0.35)' }}>
+    <div className="vp-frame" style={{ ['--vp-color' as string]: 'rgb(242 242 243 / 0.35)' }}>
       <div className="vp-corners" aria-hidden="true">
         <span />
         <span />
