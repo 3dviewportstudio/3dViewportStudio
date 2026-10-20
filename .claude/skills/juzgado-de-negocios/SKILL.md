@@ -24,38 +24,42 @@ Un juicio simulado sobre la viabilidad de un negocio. **Dos Claudes abogados** d
    - **Defensor:** el mejor argumento de que el negocio SALE BIEN (3-5 argumentos con evidencia, y cómo mitiga los riesgos).
    - **Fiscal:** el mejor argumento de que FRACASA (3-5 argumentos con evidencia, causa de muerte más probable).
    Cada uno recibe solo el expediente. Máx. 300 palabras. Deben ser honestos: sin inventar cifras; marcar estimaciones como tales.
-3. **Jurado (15 subagentes, en paralelo, en un solo mensaje).** Cada jurado recibe expediente + ambos alegatos + SU perfil. Devuelve exactamente:
-   `VOTO: VIABLE | NO VIABLE | VIABLE CON CONDICIONES` · `CONFIANZA: 1-10` · `RAZÓN (≤60 palabras)` · `CONDICIÓN CLAVE (si aplica)`.
-   Instrúyeles: "Decide solo según tu perfil y la calidad de los argumentos, no por quién habló primero. Sé independiente."
+3. **Jurado (15 subagentes, en paralelo, en un solo mensaje).** Cada jurado recibe el expediente, **el texto íntegro de ambos alegatos** (no un resumen tuyo), y SU ficha de perfil (ver tabla: sesgo, qué le importa, su umbral de rechazo y su punto ciego). Cada uno debe:
+   - Decidir **solo desde su perfil** y puntuar el negocio solo en SU criterio (p. ej. el inversor solo mira escala).
+   - Votar **inclinándose por un lado**: `VOTO: VIABLE | NO VIABLE` y, aparte, `CONDICIONES:` si las hay. No existe el voto "con condiciones": si dudas, elige hacia dónde caes.
+   - Nombrar su **umbral de rechazo**: el hecho concreto que le haría cambiar el voto.
+   Formato: `VOTO` · `CONFIANZA 1-10` (usa todo el rango; 5 es "no sé") · `RAZÓN ≤60 palabras` · `UMBRAL DE RECHAZO` · `CONDICIONES`.
 4. **Veredicto (tú, el juez).** Cuenta votos, calcula confianza media por postura, identifica el desacuerdo principal y las condiciones más repetidas. Emite el informe.
 
 ## Perfiles del jurado (uno por jurado, 15)
 
-| # | Perfil | Sesgo deliberado |
-|---|---|---|
-| 1 | Inversor de capital riesgo | Escala y retorno 10x |
-| 2 | Contable / CFO | Márgenes, caja, punto de equilibrio |
-| 3 | Cliente típico | ¿Pagaría yo por esto? |
-| 4 | Cliente escéptico | Solución actual me basta |
-| 5 | Experto de marketing | CAC, canales, tracción |
-| 6 | Ingeniero / técnico | Factibilidad y deuda técnica |
-| 7 | Abogado / regulador | Legal, licencias, propiedad intelectual |
-| 8 | Competidor directo | Cómo lo aplastaría o copiaría |
-| 9 | Emprendedor veterano que quebró | Causas de fracaso reales |
-| 10 | Emprendedor veterano exitoso | Ejecución y timing |
-| 11 | Analista de mercado | Tamaño y tendencia del mercado |
-| 12 | Experto en operaciones/logística | Coste y complejidad de operar |
-| 13 | Optimista pragmático | Busca el camino a que funcione |
-| 14 | Pesimista / abogado del diablo | Busca el punto de ruptura |
-| 15 | Ciudadano neutral sin sesgo | Sentido común |
+Cada ficha: **mide** (su único criterio) · **rechaza si** (su umbral) · **punto ciego** (lo que ignora).
+
+| # | Perfil | Mide | Rechaza si | Punto ciego |
+|---|---|---|---|---|
+| 1 | Inversor VC | Escala 10x | Techo ligado a horas de una persona | Negocios pequeños pero rentables |
+| 2 | CFO | Caja y margen por proyecto | Sin punto de equilibrio claro | Valor de marca y oportunidad |
+| 3 | Cliente que compraría | Confianza para pagar | Pruebas insuficientes para arriesgar su dinero | Cómo capta el vendedor |
+| 4 | Cliente escéptico | Ahorro frente a su alternativa | La alternativa barata le basta | Calidad premium |
+| 5 | Experto en adquisición | CAC y canales | Sin canal medible | Producto y ejecución |
+| 6 | Técnico del sector | Calidad y factibilidad | Entrega irrealista | Ventas |
+| 7 | Abogado / regulador | Cumplimiento y contratos | Riesgo legal sin resolver | Mercado |
+| 8 | Competidor directo | Amenaza real | No tiene nada que yo no pueda copiar | Nichos pequeños |
+| 9 | Fundador que quebró | Causas de muerte | Repite un patrón de fracaso conocido | Casos de éxito |
+| 10 | Veterano exitoso | Ejecución y networking | Depende solo de marketing pasivo | Escala |
+| 11 | Analista de mercado | Tamaño y tendencia | Mercado se encoge | Ejecución individual |
+| 12 | Comprador B2B / agencia | Fiabilidad y plazos | Sin garantías de continuidad | Precio |
+| 13 | Optimista | Camino realista a funcionar | No existe ningún camino | Riesgos silenciosos |
+| 14 | Pesimista | Punto de ruptura | Ningún riesgo mortal sin mitigar | Posibilidades de mejora |
+| 15 | Ciudadano neutral | Sentido común | Suena a proyecto personal, no a negocio | Detalles del sector |
 
 Adapta 2-3 perfiles al sector del caso (p. ej. artista 3D, gamer, educador) sustituyendo los menos relevantes; mantén 15 y mezcla optimistas, pesimistas y neutros.
 
 ## Plantilla del informe final
 
 ```
-# Veredicto: [VIABLE / NO VIABLE / VIABLE CON CONDICIONES]
-Votos: X viable · Y con condiciones · Z no viable (confianza media N/10)
+# Veredicto: [VIABLE / NO VIABLE / DIVIDIDO]
+Votos: X viable · Y no viable (confianza media N/10; dispersión)
 ## Por qué ganó la mayoría   (3 puntos)
 ## La voz disidente          (mejor argumento de la minoría)
 ## Riesgos que decidirán el resultado
@@ -63,7 +67,9 @@ Votos: X viable · Y con condiciones · Z no viable (confianza media N/10)
 ## Próximos pasos de validación barata (≤3, con coste/tiempo)
 ```
 
-Regla de decisión: ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividido", recomienda el experimento que resolvería la duda; los "con condiciones" cuentan como viable solo si la condición es alcanzable y lo dices.
+Regla de decisión: ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividido", recomienda el experimento que resolvería la duda. Las condiciones se resumen aparte, no cambian el voto.
+
+**Control de diversidad (antes de emitir el veredicto):** si ≥13 de 15 votan igual con confianza dentro de ±1, avisa de que el jurado puede estar sesgado hacia el consenso. Relanza solo a los 3 jurados con ficha más opuesta (1, 14, 4) con la instrucción "argumenta el voto contrario al de la mayoría y di si te convence", y reporta ambos resultados.
 
 ## Errores comunes
 
@@ -73,4 +79,6 @@ Regla de decisión: ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividid
 | Alegatos blandos o con cifras inventadas | Exige evidencia y marcar estimaciones |
 | Veredicto = promedio ciego | Pondera por calidad del argumento, no solo por conteo |
 | Dar la razón al usuario por halagar | El juez reporta el resultado aunque sea "no viable" |
-| Jurados idénticos | Cada uno debe recibir su perfil único |
+| Jurados idénticos | Cada uno recibe ficha única (mide, rechaza si, punto ciego) y vota solo desde ella |
+| Voto "con condiciones" como refugio | Prohibido: se vota hacia un lado y las condiciones van aparte |
+| Resumir los alegatos al jurado | Pasar el texto íntegro; el resumen introduce tu sesgo |
