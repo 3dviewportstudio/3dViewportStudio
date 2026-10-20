@@ -26,10 +26,10 @@ Un juicio simulado sobre la viabilidad de un negocio. **Dos Claudes abogados** d
    Cada uno recibe solo el expediente. Máx. 300 palabras. Deben ser honestos: sin inventar cifras; marcar estimaciones como tales.
 3. **Jurado (15 subagentes, en paralelo, en un solo mensaje).** Cada jurado recibe el expediente, **el texto íntegro de ambos alegatos** (no un resumen tuyo), y SU ficha de perfil (ver tabla: sesgo, qué le importa, su umbral de rechazo y su punto ciego). Cada uno debe:
    - Decidir **solo desde su perfil** y puntuar el negocio solo en SU criterio (p. ej. el inversor solo mira escala).
-   - Votar **inclinándose por un lado**: `VOTO: VIABLE | NO VIABLE` y, aparte, `CONDICIONES:` si las hay. No existe el voto "con condiciones": si dudas, elige hacia dónde caes.
+   - Dar **dos votos binarios**, sin término medio: `VOTO HOY` (el negocio tal como está en el expediente) y `VOTO CON PLAN` (si cumple las condiciones que tú mismo exiges). Si dudas, elige hacia dónde caes.
    - Nombrar su **umbral de rechazo**: el hecho concreto que le haría cambiar el voto.
-   Formato: `VOTO` · `CONFIANZA 1-10` (usa todo el rango; 5 es "no sé") · `RAZÓN ≤60 palabras` · `UMBRAL DE RECHAZO` · `CONDICIONES`.
-4. **Veredicto (tú, el juez).** Cuenta votos, calcula confianza media por postura, identifica el desacuerdo principal y las condiciones más repetidas. Emite el informe.
+   Formato: `VOTO HOY` · `VOTO CON PLAN` · `CONFIANZA 1-10` (usa todo el rango; 5 es "no sé") · `RAZÓN ≤60 palabras` · `UMBRAL DE RECHAZO` · `CONDICIONES`.
+4. **Veredicto (tú, el juez).** Cuenta por separado los votos HOY y CON PLAN, calcula confianza media por postura, identifica el desacuerdo principal y las condiciones más repetidas. Emite el informe.
 
 ## Perfiles del jurado (uno por jurado, 15)
 
@@ -58,8 +58,9 @@ Adapta 2-3 perfiles al sector del caso (p. ej. artista 3D, gamer, educador) sust
 ## Plantilla del informe final
 
 ```
-# Veredicto: [VIABLE / NO VIABLE / DIVIDIDO]
-Votos: X viable · Y no viable (confianza media N/10; dispersión)
+# Veredicto: HOY [VIABLE / NO VIABLE / DIVIDIDO] · CON PLAN [VIABLE / NO VIABLE / DIVIDIDO]
+Votos HOY: X viable · Y no viable (confianza media N/10)
+Votos CON PLAN: X viable · Y no viable (confianza media N/10)
 ## Por qué ganó la mayoría   (3 puntos)
 ## La voz disidente          (mejor argumento de la minoría)
 ## Riesgos que decidirán el resultado
@@ -67,7 +68,9 @@ Votos: X viable · Y no viable (confianza media N/10; dispersión)
 ## Próximos pasos de validación barata (≤3, con coste/tiempo)
 ```
 
-Regla de decisión: ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividido", recomienda el experimento que resolvería la duda. Las condiciones se resumen aparte, no cambian el voto.
+Regla de decisión (se aplica a HOY y a CON PLAN por separado): ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividido", recomienda el experimento que resolvería la duda. Las condiciones se resumen aparte, no cambian el voto.
+
+**Lectura conjunta:** HOY no viable + CON PLAN viable = "no está listo, pero tiene camino": el informe debe listar las condiciones del plan. HOY no viable + CON PLAN no viable = no viable de fondo. HOY viable = viable ya.
 
 **Control de diversidad (antes de emitir el veredicto):** si ≥13 de 15 votan igual con confianza dentro de ±1, avisa de que el jurado puede estar sesgado hacia el consenso. Relanza solo a los 3 jurados con ficha más opuesta (1, 14, 4) con la instrucción "argumenta el voto contrario al de la mayoría y di si te convence", y reporta ambos resultados.
 
@@ -80,5 +83,6 @@ Regla de decisión: ≥10 de 15 en una postura = veredicto claro; 6-9 = "dividid
 | Veredicto = promedio ciego | Pondera por calidad del argumento, no solo por conteo |
 | Dar la razón al usuario por halagar | El juez reporta el resultado aunque sea "no viable" |
 | Jurados idénticos | Cada uno recibe ficha única (mide, rechaza si, punto ciego) y vota solo desde ella |
-| Voto "con condiciones" como refugio | Prohibido: se vota hacia un lado y las condiciones van aparte |
+| Voto "con condiciones" como refugio | Prohibido: dos votos binarios (HOY y CON PLAN) y las condiciones van aparte |
+| Tratar la falta de pruebas como "no viable de fondo" | El voto CON PLAN separa "hoy no" de "nunca" |
 | Resumir los alegatos al jurado | Pasar el texto íntegro; el resumen introduce tu sesgo |
