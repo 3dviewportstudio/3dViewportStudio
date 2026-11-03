@@ -143,3 +143,62 @@ Prioridad: **A** = encaje claro + vía de contacto verificada · **B** = buen en
 - LinkedIn: login wall; no se pudieron ver personas ni mensajes. Enlaces de persona solo cuando salieron en buscador (Stuart Chan en Pulsar).
 - Emails verificados solo para Pulsar, Fosi, Lamzu y Mountain (el de Mountain es un buzón genérico de marketing).
 - Webs que dieron 403/429/503: Endgame Gear, NuPhy, MCHOSE; Keychron truncada.
+
+---
+
+# Segunda ronda (2026-11-03) — leads 17 a 22
+
+Mismas reglas: nada enviado; lo no comprobado figura como **sin verificar**. LinkedIn no accesible (login), salvo que se indique.
+
+## 17. AYANEO — A
+- Web: https://www.ayaneo.com · ANYUN INTELLIGENT TECHNOLOGY (HONG KONG) CO., LTD, Causeway Bay (HK). LinkedIn: no listado en su web.
+- Por qué: handhelds gaming Windows/Android, mini PCs y gamepads con lanzamientos y ediciones limitadas (p. ej. colaboración con 505 Games, Konkr Pocket Block). Producto caro y muy visual → renders y anuncios animados.
+- Emails verificados (página oficial https://ayaneo.com/about): **marketing@ayaneo.com**, sales@ayaneo.com (agentes de venta), affiliate@ayaneo.com. store@ayaneo.com es solo atención al cliente.
+- Decisor: equipo de marketing (nombres **sin verificar**).
+- Mensaje (EN):
+> Hi AYANEO team — I'm Lucas, a Blender product artist in Spain. Handhelds like yours sell on materials, screen and ergonomics, which 3D renders and a short animated spot can show far better than spec sheets. I've made a PS5 animated ad and renders for ROG Ally and Logitech G435. I'd be glad to produce a free hero shot of one of your current devices so you can judge the style. Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## 18. Anbernic — A
+- Web: https://anbernic.com · Sin LinkedIn listado.
+- Por qué: catálogo enorme de handhelds retro (RG DDS en pre-order, RG 55G1, RG Rotate, RGSP) y mandos (RG G01, RG P01); muchas variantes de color y lanzamientos nuevos.
+- Emails verificados (https://anbernic.com/pages/contact-us): **info@anbernic.com** (indicado para consultas de colaboración/partnering); contact@anbernic.com es atención al cliente.
+- Decisor: **sin verificar**.
+- Mensaje (EN):
+> Hi Anbernic team — Lucas here, a 3D product artist (Blender). With so many models and colourways (RG DDS, RG Rotate, RGSP), 3D lets you produce consistent hero renders and feature animations without reshooting each one — for example, showing the Rotate's screen mechanism in motion. My work includes a PS5 animated ad, ROG Ally and Logitech G435. Happy to make a free sample render of one device. Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## 19. Arduview — B
+- Producto: consola portátil totalmente transparente (carcasa, PCB y pantalla), 50 g, 400 juegos, plataforma Arduboy. Fundador: **Louis Huang** (según Notebookcheck). Web: https://arduview.com (sin contacto visible).
+- Estado: la web dice "live now" en Kickstarter y entrega a fundadores dic 2026–ene 2027; Notebookcheck decía "preparando lanzamiento" (precio fundador 49 USD, depósito 5 USD). **Estado actual de la campaña sin verificar.**
+- Por qué: un producto cuyo gancho es ser transparente se vende con renders limpios y detalle interno, y está en plena campaña.
+- Email/LinkedIn: no encontrados.
+- Mensaje (EN):
+> Hi Louis — I'm Lucas, a Blender product artist. Arduview's whole hook is being see-through, so the visuals matter more than usual: glass-clear shell and PCB, internal detail, the screen glowing through the body. I make photoreal renders and short product animations for gaming hardware (PS5 ad, ROG Ally, Logitech G435), suited to Kickstarter pages and social. I can send a free hero render concept. Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## 20. SOND (Dreambuds) — B
+- Web: https://sond.com · Boston. Fundador/CEO: **Yadid Ayzenberg** (ex-Bose, según TechCrunch/otros). Serie semilla de 7 M$ (E14 Fund, Crosslink, etc.). LinkedIn y email: no verificados.
+- Por qué: auriculares de sueño con sensores y audio adaptativo, con reservas abiertas; producto pequeño y técnico que necesita visualizar sensores y el sistema en la oreja.
+- Mensaje (EN):
+> Hi Yadid — I'm Lucas, a Blender product artist from Spain. Dreambuds pack sensing, adaptive audio and a charging case into something tiny; that's hard to show in photos, easy in 3D (cutaways, ear-fit animation, hero renders). I've done a PS5 animated ad and renders for ROG Ally and Logitech G435. Happy to do a free concept shot for your launch. Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## 21. Lumia Health (Lumia 2 Smart Earrings) — B
+- Web: https://lumiahealth.com (según un blog; sin confirmar). Boston; CEO/cofundador **Daniel Lee**; 7 M$ levantados. Kickstarter lanzada ~29 abr 2026, primeros envíos previstos dic 2026. LinkedIn/email: no verificados.
+- Por qué: wearable minúsculo (<1 g) cuyo valor es técnico (flujo sanguíneo); entre campaña y retail necesita visuales de macro y explicación animada. Fuera del nicho "gaming", pero es hardware/wearable.
+- Mensaje (EN):
+> Hi Daniel — Lucas here, a 3D product artist (Blender). Lumia 2 is tiny and technical, which is exactly where 3D beats photography: macro renders of the earring, a cutaway of the sensor and a short animation of how it measures. I've made a PS5 animated ad and renders for ROG Ally and Logitech G435. I'd be glad to produce a free concept shot. Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## 22. The Pin Universe (PIN Pulse smart ring) — C
+- Anillo inteligente en Kickstarter (entrega estimada ago 2026; ya pasada, estado **sin verificar**). Fundadores citados por una reseña: Sudeshna Naik y Hrishekesh Patil (**sin verificar**). Sin web, email ni LinkedIn encontrados.
+- Mensaje (EN):
+> Hi team — I'm Lucas, a Blender product artist. For a smart ring that estimates BP and glucose trends, clear visuals of the sensors and the finish are key for retail and ads. I produce photoreal renders and short 3D animations (PS5 ad, ROG Ally, Logitech G435). May I send a free sample render? Profile: https://www.upwork.com/freelancers/~011256a537b43d20be
+
+## Resumen segunda ronda
+| # | Empresa | Prio | Email verificado |
+|---|---------|------|------------------|
+| 17 | AYANEO | A | marketing@ayaneo.com |
+| 18 | Anbernic | A | info@anbernic.com |
+| 19 | Arduview | B | no |
+| 20 | SOND | B | no |
+| 21 | Lumia Health | B | no |
+| 22 | The Pin Universe | C | no |
+
+Bloqueado: Abxylute (la búsqueda no devolvió su web), Turtle Beach (sin email público en la página consultada), páginas de contacto 404 de Ayaneo/Sond.
