@@ -23,6 +23,13 @@ function studio(locale: Locale) {
     address: { '@type': 'PostalAddress', addressCountry: site.country },
     areaServed: 'Worldwide',
     knowsLanguage: ['es', 'en'],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: locale === 'es' ? 'Presupuestos y consultas' : 'Quotes and enquiries',
+      email: site.email,
+      availableLanguage: ['Spanish', 'English'],
+      areaServed: 'Worldwide',
+    },
     makesOffer: Object.values(c.services.items).map((s) => ({
       '@type': 'Offer',
       itemOffered: { '@type': 'Service', name: s.name, description: s.text },
