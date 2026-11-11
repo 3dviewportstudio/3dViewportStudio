@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { t } from '@/content/copy';
 import { fontVariables } from '@/lib/fonts';
 import type { Locale } from '@/lib/routes';
+import { CookieConsent } from './CookieConsent';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { MotionProvider } from './MotionProvider';
@@ -37,6 +38,7 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         </main>
         <Footer locale={locale} />
         <MotionProvider />
+        <CookieConsent locale={locale} />
       </body>
     </html>
   );

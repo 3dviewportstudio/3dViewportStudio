@@ -3,7 +3,7 @@ import { site } from '@/lib/site';
 
 export type LegalDoc = { title: string; updated: string; intro?: string; sections: Array<{ heading: string; body: string[] }> };
 
-const UPDATED = { es: '29 de septiembre de 2026', en: '29 September 2026' };
+const UPDATED = { es: '11 de noviembre de 2026', en: '11 November 2026' };
 
 function holderLines(locale: Locale): string[] {
   const l = site.legal;
@@ -114,7 +114,9 @@ export function privacyPolicy(locale: Locale): LegalDoc {
         },
         {
           heading: 'Cookies',
-          body: ['This website does not use its own or third-party cookies for analytics or advertising, so no cookie consent is required.'],
+          body: [
+            'This website only uses Google advertising cookies (Google Ads) if you accept them in the cookie banner. If you reject them, or do not choose, no advertising cookies are installed. The legal basis is your consent (art. 6.1.a GDPR and art. 22.2 of the Spanish LSSI-CE). Google acts as an independent controller for the data its cookies collect; more information at policies.google.com/technologies/ads. You can change your choice at any time with the “Cookies” button at the bottom of the page.',
+          ],
         },
       ],
     };
@@ -156,7 +158,9 @@ export function privacyPolicy(locale: Locale): LegalDoc {
       },
       {
         heading: 'Cookies',
-        body: ['Esta web no utiliza cookies propias ni de terceros con fines analíticos o publicitarios, por lo que no necesita tu consentimiento de cookies.'],
+        body: [
+          'Esta web solo utiliza cookies publicitarias de Google (Google Ads) si las aceptas en el banner de cookies. Si las rechazas o no eliges ninguna opción, no se instala ninguna cookie publicitaria. La base legal es tu consentimiento (art. 6.1.a RGPD y art. 22.2 LSSI-CE). Google actúa como responsable independiente de los datos que recogen sus cookies; más información en policies.google.com/technologies/ads. Puedes cambiar tu elección en cualquier momento con el botón “Cookies” de la parte inferior de la página.',
+        ],
       },
     ],
   };
