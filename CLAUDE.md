@@ -13,3 +13,7 @@ El usuario quiere recibir **más tarjetas**, con un aspecto cuidado y vistoso. �
 - **Tarjetas visuales**: ofrece versiones en Canva, Figma o Gamma cuando encajen (tarjetas de presentación, felicitación, redes sociales).
 - **Tarjetas en artifacts**: para paneles, comparativas o dashboards, usa rejillas de tarjetas con la skill `artifact-design`.
 - **Si ves otra oportunidad que quede mejor como tarjeta** (comparativas, checklists, estados de despliegue, resultados de PR/CI), úsala sin pedir permiso.
+
+## Autonomía
+
+- Usa por defecto la skill **autonomo** (`.claude/skills/autonomo`): actuar sin preguntar y con pocos tokens. No la uses si el usuario pide expresamente que le preguntes algo.
