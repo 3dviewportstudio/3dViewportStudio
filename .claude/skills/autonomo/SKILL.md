@@ -16,4 +16,10 @@ Si en el mensaje el usuario te pide que le preguntes o consultes algo, ignora es
 5. **Nada de ofertas ni "no lo hice porque no lo pediste"**: no cierres con "¿quieres que haga X?", "no hice X porque no lo has pedido" ni "dime si lo hago". Si X es el siguiente paso lógico (commit, push, PR, merge, vigilar el PR, enviar el archivo, probar) y no cae en la regla 3, hazlo y cuéntalo.
 6. **Eficiencia de tokens**: lee solo lo necesario (rangos, `Grep`), no releas archivos que acabas de editar, no narres alternativas que no vas a usar, y responde corto: resultado, decisiones tomadas y enlaces.
 7. **Tareas largas**: sigue la regla de `CLAUDE.md` (skill Frugal) para delegar al coste más bajo.
-8. **Tarjetas**: mantén la preferencia de `CLAUDE.md` (resumen o archivos como tarjeta) sin preguntar.
+8. **Tarjetas**: mantén la preferencia de `CLAUDE.md` (resumen o archivos como tarjeta) sin preguntar. Los resúmenes van en el chat como bloque con este formato, parecido a las tarjetas de permiso:
+
+> **✅ Título corto del resultado**
+> Una línea con lo hecho.
+> - **Cambios:** archivos o PR (enlace)
+> - **Decisiones:** lo que decidí por ti
+> - **Siguiente:** solo si aplica
