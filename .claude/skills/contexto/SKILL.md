@@ -8,7 +8,8 @@ description: Tarjeta de uso de la sesión. Úsala cuando el usuario escriba /con
 Cuando el usuario pida `/context`, `/contexto` o el uso de la sesión, responde con una tarjeta, no con texto largo. No preguntes nada.
 
 ## Pasos (todo de golpe)
-1. Reúne datos **reales** en paralelo: `get_session` (modelo y estado), `git log --oneline | wc -l`, rama actual, PRs y commits de la sesión, archivos tocados, y los tokens restantes si el sistema los muestra (`total_tokens`).
+0. **Si en la conversación está la salida de `/context` (local-command-stdout), usa SUS números reales** (tokens usados, ventana, mensajes, herramientas MCP, skills, buffer, libre). Los de herramientas "deferred" no ocupan contexto: no los sumes a lo usado; el segmento "Libre" es la ventana menos lo usado y el buffer. En ese caso el pie dice "Datos reales de /context", no "estimado". Segmentos: `label` corto con porcentaje (la que empieza por "Libre" se pinta gris) y `pct` numérico; suma 100.
+1. Si no hay salida de `/context`, reúne datos **reales** en paralelo: `get_session` (modelo y estado), `git log --oneline | wc -l`, rama actual, PRs y commits de la sesión, archivos tocados, y los tokens restantes si el sistema los muestra (`total_tokens`).
 2. Escribe `datos.json` en el scratchpad con este formato:
    ```json
    {"tabs":["Contexto","Sesión"],"range":"Sesión actual",

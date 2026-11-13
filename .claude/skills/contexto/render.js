@@ -12,11 +12,11 @@ function html(sq) {
                : { w: 640, pad: 20, tab: 13, lab: 12, num: 22, gap: 10, cell: 14, cg: 3, foot: 12, leg: 12 };
   // Celdas: una por cada (100/total)% del contexto, coloreadas por categoría.
   const cells = []; let acc = 0;
-  d.segments.forEach((s, i) => { acc += s.pct; while (cells.length < Math.round(acc / 100 * total)) cells.push(s.label === 'Libre' ? -1 : i); });
+  d.segments.forEach((s, i) => { acc += s.pct; while (cells.length < Math.round(acc / 100 * total)) cells.push(s.label.startsWith('Libre') ? -1 : i); });
   while (cells.length < total) cells.push(-1);
   const heat = cells.map(c => `<i style="${c >= 0 ? 'background:' + COL[c % COL.length] : ''}"></i>`).join('');
   const tiles = d.tiles.map(([l, v]) => `<div class="t"><small>${l}</small><b>${v}</b></div>`).join('');
-  const leg = d.segments.map((s, i) => `<span><u style="background:${s.label === 'Libre' ? '#3b3b38' : COL[i % COL.length]}"></u>${s.label} ${s.pct}%</span>`).join('');
+  const leg = d.segments.map((s, i) => `<span><u style="background:${s.label.startsWith('Libre') ? '#3b3b38' : COL[i % COL.length]}"></u>${s.label}</span>`).join('');
   return `<!doctype html><html><head><meta charset="utf-8"><style>
 body{margin:0;background:#262624;font-family:system-ui,-apple-system,sans-serif}
 .card{width:${f.w}px;${sq ? 'height:900px;' : ''}box-sizing:border-box;background:#30302e;border:1px solid #444441;border-radius:16px;padding:${f.pad}px;color:#f5f4ee}
