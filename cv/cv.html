@@ -1,31 +1,50 @@
 <!doctype html><html lang="es"><meta charset="utf-8"><title>CV Lucas Expósito</title>
 <style>
 @page{size:A4;margin:0}*{box-sizing:border-box}
-body{margin:0;font:13px/1.5 Helvetica,Arial,sans-serif;color:#1c1c1e;width:210mm;height:297mm;display:flex}
-aside{width:68mm;background:#1f1f1e;color:#eee;padding:14mm 8mm}
-main{flex:1;padding:14mm 11mm}
-h1{font-size:26px;margin:0;line-height:1.1}h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:18px 0 6px;color:#3b82f6}
-aside h2{color:#7aa7ff}.role{font-size:14px;color:#555;margin:4px 0 14px}
-ul{margin:0;padding-left:16px}li{margin-bottom:4px}p{margin:0 0 6px}.tag{display:inline-block;border:1px solid #555;border-radius:99px;padding:2px 9px;margin:0 4px 5px 0;font-size:11px}
-.card{border:1px solid #e3e3e6;border-radius:10px;padding:9px 12px;margin-bottom:9px}.card b{display:block}
+:root{--ink:#14141a;--mute:#5b5b66;--accent:#4f7cff;--accent2:#8b5cf6;--soft:#f4f6fb}
+body{margin:0;width:210mm;height:297mm;font:12.5px/1.55 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;display:flex;flex-direction:column;overflow:hidden}
+header{background:linear-gradient(135deg,#0f1020 0%,#1b1f3b 55%,#2a1f5c 100%);color:#fff;padding:16mm 14mm 13mm;position:relative}
+header:after{content:"";position:absolute;right:-30mm;top:-30mm;width:95mm;height:95mm;border-radius:50%;background:radial-gradient(circle,var(--accent) 0%,var(--accent2) 60%,transparent 70%);opacity:.55}
+.kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#9fb4ff;font-weight:700}
+h1{font-size:40px;margin:4px 0 2px;letter-spacing:-.02em;font-weight:800}
+.role{font-size:15px;color:#d6dcff;margin:0}
+.chips{margin-top:10px;position:relative;z-index:1}
+.chip{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:3px 11px;margin:0 6px 6px 0;font-size:11px}
+.grid{flex:1;display:grid;grid-template-columns:62mm 1fr;gap:0}
+aside{background:var(--soft);padding:9mm 8mm}
+main{padding:9mm 11mm}
+h2{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;font-weight:800}
+section{margin-bottom:8mm}
+aside section{margin-bottom:6mm}
+p{margin:0 0 4px}
+.bar{height:6px;background:#dde3f5;border-radius:99px;margin:4px 0 8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.card{background:#fff;border:1px solid #e6e9f3;border-left:4px solid var(--accent);border-radius:10px;padding:8px 11px;margin-bottom:8px;box-shadow:0 2px 8px rgba(20,20,40,.05)}
+.card b{display:block;font-size:13px}
+.card span{color:var(--mute);font-size:11px}
+ul{margin:0;padding-left:0;list-style:none}li{margin-bottom:5px;padding-left:14px;position:relative}li:before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:50%;background:var(--accent2)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8mm}
+.stat{background:var(--soft);border-radius:10px;padding:8px 10px}.stat b{display:block;font-size:20px;color:var(--accent);font-weight:800}.stat span{font-size:10px;color:var(--mute)}
 </style>
+<header>
+<div class="kicker">Artista 3D · Render de producto</div>
+<h1>Lucas Expósito</h1>
+<p class="role">Packshots, escenas y animaciones de producto para marcas y campañas</p>
+<div class="chips"><span class="chip">Blender</span><span class="chip">Cinema 4D</span><span class="chip">Photoshop</span><span class="chip">After Effects</span><span class="chip">Premiere</span></div>
+</header>
+<div class="grid">
 <aside>
-<h2 style="margin-top:0">Contacto</h2>
-<p>3dviewportstudio@gmail.com<br>España<br>[Teléfono]<br>[Web / portfolio]</p>
-<h2>Herramientas</h2>
-<span class="tag">Blender</span><span class="tag">Cinema 4D</span><span class="tag">Photoshop</span><span class="tag">After Effects</span><span class="tag">Premiere</span>
-<h2>Idiomas</h2><p>Español · nativo<br>Inglés · [nivel]</p>
-<h2>Formación</h2><p>[Titulación / centro / año]</p>
+<section><h2>Contacto</h2><p>3dviewportstudio@gmail.com</p><p>España</p><p>[Teléfono]</p><p>[Web / portfolio]</p></section>
+<section><h2>Idiomas</h2><p>Español · nativo</p><p>Inglés · [nivel]</p></section>
+<section><h2>Formación</h2><p>[Titulación / centro / año]</p></section>
+<section><h2>Estudio</h2><div class="stats"><div class="stat"><b>6+</b><span>años con Blender</span></div><div class="stat"><b>24–48 h</b><span>tiempo de respuesta</span></div></div></section>
 </aside>
 <main>
-<h1>Lucas Expósito</h1>
-<div class="role">Artista 3D · Render de producto y motion para marcas</div>
-<h2>Perfil</h2>
-<p>Fundador de ViewportStudio3D. Más de 6 años creando en Blender, especializado en render de producto: packshots para e-commerce, escenas lifestyle y animaciones de lanzamiento. Busco colaborar con agencias de marketing como proveedor o integrante del equipo creativo, entregando piezas listas para tienda, anuncios y redes.</p>
-<h2>Experiencia</h2>
-<div class="card"><b>Fundador · Artista 3D — ViewportStudio3D</b>Estudio de render 3D de producto, bilingüe ES/EN. Packshots, escenas y animaciones sin sesión de fotos; variantes listas para tienda y anuncios. Respuesta en 24–48 h.</div>
-<div class="card"><b>Fine Nipona (cliente)</b>Imágenes y animaciones para presentar la gama de una marca de matcha ecológico ultra premium (Matcha y Mulberry Matcha).</div>
-<div class="card"><b>pPhone 17 (proyecto personal)</b>Film de lanzamiento 3D de 14 s de un smartphone de marca ficticia, mostrando sus cinco colores.</div>
-<h2>Qué puedo aportar a una agencia</h2>
-<ul><li>Packshots y renders de producto para e-commerce y campañas</li><li>Animación 3D para anuncios, redes y lanzamientos</li><li>Variantes de color y formato sin repetir sesiones de foto</li><li>Postproducción y edición (Photoshop, After Effects, Premiere)</li></ul>
-</main></html>
+<section><h2>Perfil</h2><p>Fundador de ViewportStudio3D. Más de 6 años creando en Blender, especializado en render de producto: packshots para e-commerce, escenas lifestyle y films de lanzamiento. Entrego piezas listas para tienda, anuncios y redes, sin necesidad de sesión de fotos.</p></section>
+<section><h2>Experiencia</h2>
+<div class="card"><b>Fundador · Artista 3D — ViewportStudio3D</b><span>Estudio de render 3D de producto, bilingüe ES/EN</span><p>Packshots, escenas y animaciones con variantes listas para tienda y anuncios.</p></div>
+<div class="card"><b>Fine Nipona (cliente)</b><span>Imágenes y animaciones de producto</span><p>Presentación de la gama de una marca de matcha ecológico ultra premium (Matcha y Mulberry Matcha).</p></div>
+<div class="card"><b>pPhone 17 (proyecto personal)</b><span>Film de lanzamiento 3D · 14 s</span><p>Smartphone de marca ficticia con cinco colores; muestra el enfoque de lanzamiento de producto tecnológico.</p></div>
+</section>
+<section><h2>Qué aporto a una agencia</h2><ul><li>Packshots y renders de producto para e-commerce y campañas</li><li>Animación 3D para anuncios, redes y lanzamientos</li><li>Variantes de color y formato sin repetir sesiones de foto</li><li>Postproducción y edición (Photoshop, After Effects, Premiere)</li></ul></section>
+</main>
+</div></html>
