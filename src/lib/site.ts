@@ -11,7 +11,7 @@ export const site = {
   responseTime: { es: '24–48 h', en: '24–48 h' },
   /** Años de experiencia con Blender (dato confirmado: "por lo menos 6"). */
   blenderYears: 6,
-  tools: ['Blender', 'Cinema 4D', 'Photoshop', 'After Effects', 'Premiere'],
+  tools: ['Blender', 'Photoshop', 'After Effects', 'Premiere'],
   /**
    * Datos del aviso legal (LSSI-CE). El NIF es obligatorio para publicar:
    * mientras esté vacío, el aviso legal no muestra esa línea y el build avisa.
