@@ -3,11 +3,11 @@
 @font-face{font-family:Satoshi;src:url(../src/fonts/Satoshi-Black.woff2);font-weight:900}
 @font-face{font-family:Satoshi;src:url(../src/fonts/Satoshi-Bold.woff2);font-weight:700}
 @page{size:A4;margin:0}*{box-sizing:border-box}
-:root{--bg:#1e1e1d;--card:#30302e;--line:#454542;--ink:#f1f0ec;--mute:#a3a29c;--a:#7fa6ff;--b:#b28cff;--g:#9be3b0}
+:root{--bg:#1e1e1d;--card:#30302e;--line:#454542;--ink:#f1f0ec;--mute:#a3a29c;--a:#7fa6ff;--g:#9be3b0}
 body{margin:0;width:210mm;height:297mm;background:var(--bg);color:var(--ink);font:11.5px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:9mm;overflow:hidden;display:flex;flex-direction:column;gap:4mm}
 .c{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
 h1,h3,.n{font-family:Satoshi,sans-serif}
-.hero{flex-shrink:0;height:72mm;display:grid;grid-template-columns:1fr 92mm;overflow:hidden;position:relative}
+.hero{background:#000;flex-shrink:0;height:72mm;display:grid;grid-template-columns:1fr 92mm;overflow:hidden;position:relative}
 .hero .t{padding:8mm 8mm 7mm}
 .tabs{display:flex;gap:5px;margin-bottom:6mm}.tab{padding:4px 12px;border-radius:99px;font-size:10px;color:var(--mute);border:1px solid var(--line)}.tab.on{background:var(--ink);color:#1e1e1d;border-color:var(--ink);font-weight:700}
 .k{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);font-weight:700}
@@ -15,7 +15,7 @@ h1{font-size:44px;font-weight:900;margin:2mm 0 1mm;letter-spacing:-.03em;line-he
 .role{color:#d0cfc9;font-size:13px;margin:0 0 4mm}
 .avail{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;background:rgba(155,227,176,.1);border:1px solid rgba(155,227,176,.35);color:var(--g);padding:3px 10px;border-radius:99px}.avail:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g)}
 .hero img{width:100%;height:100%;object-fit:cover;object-position:88% 50%;display:block}
-.hero .ph{position:relative;height:72mm}.hero .ph:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--card),transparent 45%)}
+.hero .ph{position:relative;height:72mm}
 .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:3mm}
 .s{padding:4mm 3mm;text-align:center}.n{display:block;font-size:22px;font-weight:900;color:var(--a);line-height:1.1}.s span{font-size:8.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
 .row{display:grid;grid-template-columns:1.35fr 1fr;gap:4mm}
