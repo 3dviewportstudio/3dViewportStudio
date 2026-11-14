@@ -7,17 +7,17 @@
 body{margin:0;width:210mm;height:297mm;background:var(--bg);color:var(--ink);font:11.5px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:9mm;overflow:hidden;display:flex;flex-direction:column;gap:4mm}
 .c{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
 h1,h3,.n{font-family:Satoshi,sans-serif}
-.hero{flex-shrink:0;height:72mm;display:grid;grid-template-columns:1fr 62mm;overflow:hidden;position:relative}
+.hero{flex-shrink:0;height:72mm;display:grid;grid-template-columns:1fr 92mm;overflow:hidden;position:relative}
 .hero .t{padding:8mm 8mm 7mm}
 .tabs{display:flex;gap:5px;margin-bottom:6mm}.tab{padding:4px 12px;border-radius:99px;font-size:10px;color:var(--mute);border:1px solid var(--line)}.tab.on{background:var(--ink);color:#1e1e1d;border-color:var(--ink);font-weight:700}
 .k{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);font-weight:700}
-h1{font-size:44px;font-weight:900;margin:2mm 0 1mm;letter-spacing:-.03em;line-height:.95;background:linear-gradient(100deg,#fff 30%,var(--a) 75%,var(--b));-webkit-background-clip:text;color:transparent}
+h1{font-size:44px;font-weight:900;margin:2mm 0 1mm;letter-spacing:-.03em;line-height:.95;color:#fff}
 .role{color:#d0cfc9;font-size:13px;margin:0 0 4mm}
 .avail{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;background:rgba(155,227,176,.1);border:1px solid rgba(155,227,176,.35);color:var(--g);padding:3px 10px;border-radius:99px}.avail:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g)}
-.hero img{width:100%;height:100%;object-fit:cover;display:block}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:88% 50%;display:block}
 .hero .ph{position:relative;height:72mm}.hero .ph:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--card),transparent 45%)}
 .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:3mm}
-.s{padding:4mm 3mm;text-align:center}.n{display:block;font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--a),var(--b));-webkit-background-clip:text;color:transparent;line-height:1.1}.s span{font-size:8.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+.s{padding:4mm 3mm;text-align:center}.n{display:block;font-size:22px;font-weight:900;color:var(--a);line-height:1.1}.s span{font-size:8.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
 .row{display:grid;grid-template-columns:1.35fr 1fr;gap:4mm}
 .p{padding:6mm}
 h2{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--a);margin:0 0 3mm;font-weight:700;display:flex;align-items:center;gap:6px}h2:after{content:"";flex:1;height:1px;background:var(--line)}
@@ -26,8 +26,8 @@ p{margin:0;color:#d6d5cf}
 .w{overflow:hidden;border-radius:14px;background:#262624;border:1px solid var(--line)}
 .w img{width:100%;height:30mm;object-fit:cover;display:block}
 .w div{padding:3mm 3.5mm}.w h3{margin:0;font-size:13px;font-weight:700}.w span{font-size:9.5px;color:var(--mute)}
-.pill{display:inline-block;font-size:8.5px;padding:1px 7px;border-radius:99px;margin-bottom:1.5mm;font-weight:700}.cl{background:rgba(127,166,255,.15);color:var(--a)}.pe{background:rgba(178,140,255,.15);color:var(--b)}
-ul{list-style:none;margin:0;padding:0}li{padding:2.2mm 0 2.2mm 6mm;position:relative;border-bottom:1px solid #3b3b38;color:#d6d5cf}li:last-child{border:0}li:before{content:"";position:absolute;left:0;top:3.6mm;width:7px;height:7px;border-radius:2px;background:linear-gradient(135deg,var(--a),var(--b))}
+.pill{display:inline-block;font-size:8.5px;padding:1px 7px;border-radius:99px;margin-bottom:1.5mm;font-weight:700}.cl{background:rgba(127,166,255,.15);color:var(--a)}.pe{background:rgba(127,166,255,.15);color:var(--a)}
+ul{list-style:none;margin:0;padding:0}li{padding:2.2mm 0 2.2mm 6mm;position:relative;border-bottom:1px solid #3b3b38;color:#d6d5cf}li:last-child{border:0}li:before{content:"";position:absolute;left:0;top:3.6mm;width:7px;height:7px;border-radius:2px;background:var(--a)}
 .tag{display:inline-block;background:#262624;border:1px solid var(--line);border-radius:99px;padding:3px 10px;margin:0 4px 5px 0;font-size:10.5px}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:2mm 4mm;font-size:11px}.kv b{color:var(--mute);font-weight:400}
 .foot{display:flex;justify-content:space-between;align-items:center;padding:4mm 6mm;font-size:10.5px;color:var(--mute)}
@@ -41,7 +41,7 @@ ul{list-style:none;margin:0;padding:0}li{padding:2.2mm 0 2.2mm 6mm;position:rela
   <p class="role">Render y animación 3D de producto para marcas y agencias</p>
   <span class="avail">Disponible para colaborar con agencias</span>
  </div>
- <div class="ph"><img src="../public/media/img/fine-nipona-matcha-720.jpg"></div>
+ <div class="ph"><img src="../public/media/img/pphone-verde-1440.jpg"></div>
 </section>
 <section class="stats">
  <div class="c s"><b class="n">6+</b><span>años Blender</span></div>
