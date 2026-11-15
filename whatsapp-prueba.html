@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prueba WhatsApp</title>
+<style>body{font-family:system-ui;max-width:520px;margin:24px auto;padding:0 16px}a{display:block;margin:10px 0;padding:14px;border-radius:12px;background:#25d366;color:#fff;text-decoration:none;font-weight:600;box-shadow:0 2px 8px #0002}small{color:#666}</style>
+<h2>Mensaje de prueba</h2>
+<small>Toca cada botón, se abre WhatsApp con el texto listo. Envía y apunta la hora.</small>
+<script>
+const msg="Hola, buenos días. ¿Cuánto cuesta una limpieza dental y qué huecos tenéis esta semana? Gracias.";
+const c={"Clínica Dental Barcelona":"34934878329","Clínica Dental DEN":"34932188080","RASLAN":"34937656788","Muro Clínica Dental":"34931861417"};
+for(const[n,t]of Object.entries(c)){const a=document.createElement("a");a.href="https://wa.me/"+t+"?text="+encodeURIComponent(msg);a.target="_blank";a.textContent="Enviar a "+n;document.body.append(a)}
+</script>
