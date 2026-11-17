@@ -28,3 +28,8 @@ Conflictos: si 1 choca con 4 o 5, mantén 3 frases (la última es el siguiente p
 ## Autonomía
 
 - Usa por defecto la skill **autonomo** (`.claude/skills/autonomo`): actuar sin preguntar y con pocos tokens. No la uses si el usuario pide expresamente que le preguntes algo.
+
+## Reparto de modelos (preferencia del usuario)
+
+- **Trabajos duros** (modelado complejo, scripts grandes, depuración difícil): delega con `Agent` y `model: "opus"`. Usa `model: "fable"` solo si es muy difícil.
+- **Corregir erratas y cambios triviales de texto**: hazlo en Sonnet (modelo por defecto de esta sesión o `model: "sonnet"`).
