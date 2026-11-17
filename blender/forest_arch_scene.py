@@ -7,9 +7,23 @@ Uso:
 Genera colecciones separadas para exportar a Unreal (FBX/glTF) y esparcir
 la vegetación allí con Foliage o PCG: la vegetación se exporta como
 MALLAS BASE (una de cada) y sus posiciones como CSV de puntos.
+La casa completa (exterior + interior modular) está en house_full.py.
 """
 import bpy, bmesh, math, random, sys, os, csv
 from mathutils import Vector, Matrix
+
+_cands = []
+try:
+    _cands.append(os.path.dirname(os.path.abspath(__file__)))
+except NameError:
+    pass
+_cands.append(bpy.path.abspath("//"))  # editor de texto de Blender: junto al .blend
+_HERE = next((d for d in _cands if os.path.isfile(os.path.join(d, "house_full.py"))), _cands[0])
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
+import importlib
+import house_full
+importlib.reload(house_full)
 
 SEED = 7
 random.seed(SEED)
@@ -85,19 +99,40 @@ M = {}
 
 
 def materials():
-    M["stone"] = rock_mat("Piedra_Arco", (0.34, 0.37, 0.42))
-    M["slab"] = rock_mat("Piedra_Losa", (0.28, 0.29, 0.30))
-    M["soil"] = mat("Tierra", (0.09, 0.065, 0.045), 1.0)
-    M["ivy"] = mat("Hiedra", (0.03, 0.12, 0.03), 0.6)
-    M["fir"] = mat("Abeto", (0.02, 0.09, 0.04), 0.8)
-    M["bark"] = mat("Corteza", (0.06, 0.04, 0.03), 1.0)
-    M["fern"] = mat("Helecho", (0.04, 0.17, 0.05), 0.55)
-    M["flower"] = mat("Flor", (0.08, 0.2, 0.75), 0.5)
-    M["house"] = mat("Casa", (0.05, 0.045, 0.04), 1.0)
-    M["window"] = mat("Ventana", (1, 0.55, 0.2), 0.5, emit=((1, 0.55, 0.2), 6.0))
-
+    # shaders procedurales detallados (blender/shaders_pro.py); si no está, materiales básicos
+    try:
+        here = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        here = bpy.path.abspath("//")
+    sys.path.insert(0, here)
+    try:
+        import importlib, shaders_pro
+        importlib.reload(shaders_pro)
+        M.update(shaders_pro.all_materials())
+    except ImportError:
+        M["stone"] = rock_mat("Piedra_Arco", (0.34, 0.37, 0.42))
+        M["slab"] = rock_mat("Piedra_Losa", (0.28, 0.29, 0.30))
+        M["soil"] = mat("Tierra", (0.09, 0.065, 0.045), 1.0)
+        M["ivy"] = mat("Hiedra", (0.03, 0.12, 0.03), 0.6)
+        M["fir"] = mat("Abeto", (0.02, 0.09, 0.04), 0.8)
+        M["bark"] = mat("Corteza", (0.06, 0.04, 0.03), 1.0)
+        M["fern"] = mat("Helecho", (0.04, 0.17, 0.05), 0.55)
+        M["flower"] = mat("Flor", (0.08, 0.2, 0.75), 0.5)
+    
 
 # ------------------------------------------------------------------- suelo
+HOUSE_ORIGIN = (-0.5, 24.0, 0.0)          # puerta principal en x=0, al final del camino
+CLEARING = (-10.0, 14.0, 17.0, 41.0)      # claro llano frente/alrededor de la casa (x0,x1,y0,y1)
+
+
+def clearing(x, y, fall=4.0):
+    """1 dentro del claro, 0 en el bosque, transición suave de `fall` metros."""
+    dx = max(CLEARING[0] - x, 0, x - CLEARING[1])
+    dy = max(CLEARING[2] - y, 0, y - CLEARING[3])
+    t = max(0.0, 1 - math.hypot(dx, dy) / fall)
+    return t * t * (3 - 2 * t)
+
+
 def ground(c):
     bpy.ops.mesh.primitive_grid_add(x_subdivisions=120, y_subdivisions=120, size=90)
     g = bpy.context.active_object
@@ -105,8 +140,8 @@ def ground(c):
     for v in g.data.vertices:  # ondulaciones suaves; camino (eje Y) más plano
         x, y = v.co.x, v.co.y
         path = math.exp(-(x / 2.6) ** 2)
-        v.co.z = (1 - path) * (0.6 * math.sin(x * 0.17) * math.cos(y * 0.13)
-                               + 0.15 * random.random()) - 0.02 * path
+        v.co.z = ((1 - path) * (0.6 * math.sin(x * 0.17) * math.cos(y * 0.13)
+                                + 0.15 * random.random()) - 0.02 * path) * (1 - clearing(x, y))
     g.data.materials.append(M["soil"])
     bpy.ops.object.shade_smooth()
     link(g, c)
@@ -115,7 +150,8 @@ def ground(c):
 
 def ground_z(x, y):
     path = math.exp(-(x / 2.6) ** 2)
-    return (1 - path) * (0.6 * math.sin(x * 0.17) * math.cos(y * 0.13)) - 0.02 * path
+    return ((1 - path) * (0.6 * math.sin(x * 0.17) * math.cos(y * 0.13)) - 0.02 * path) \
+        * (1 - clearing(x, y))
 
 
 # -------------------------------------------------------------------- arco
@@ -344,38 +380,17 @@ def scatter(proto, count, area, c, scale=(0.8, 1.3), keep_out=None, tag=""):
         o.location = (x, y, z)
         o.rotation_euler = (0, 0, rz)
         o.scale = (s, s, s * random.uniform(0.9, 1.15))
+        o.hide_render = False  # la copia hereda el hide_render del prototipo
         c.objects.link(o)
         pts.append((proto.name, x, y, z, rz, s))
     return pts
 
 
 # -------------------------------------------------------------------- casa
-def house(c, y=22):
-    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, y, 2.5))
-    h = bpy.context.active_object
-    h.name = "Casa"
-    h.scale = (7, 5, 5)
-    h.data.materials.append(M["house"])
-    link(h, c)
-    bpy.ops.mesh.primitive_cone_add(radius1=5.4, radius2=0.1, depth=3, vertices=4,
-                                    location=(0, y, 6.5), rotation=(0, 0, math.pi / 4))
-    r = bpy.context.active_object
-    r.name = "Tejado"
-    r.data.materials.append(M["house"])
-    link(r, c)
-    bpy.ops.mesh.primitive_cube_add(size=1, location=(0.0, y - 2.52, 1.6))
-    w = bpy.context.active_object
-    w.name = "Ventana_luz"
-    w.scale = (0.8, 0.05, 1.1)
-    w.data.materials.append(M["window"])
-    link(w, c)
-    pl = bpy.data.lights.new("LuzVentana", "POINT")
-    pl.energy = 800
-    pl.color = (1, 0.55, 0.2)
-    pl.shadow_soft_size = 0.3
-    po = bpy.data.objects.new("LuzVentana", pl)
-    po.location = (0, y - 3.4, 1.7)
-    c.objects.link(po)
+def house():
+    """Casa completa (house_full.py): exterior, interior modular, espejos, props,
+    luces y cámaras de vista previa. Exporta sus módulos a OUT/casa/."""
+    return house_full.build(origin=HOUSE_ORIGIN, out_dir=OUT)
 
 
 # --------------------------------------------------- ambiente: noche + niebla
@@ -444,8 +459,7 @@ def export(arch_objs, slab_objs, veg_protos, points):
             bpy.context.view_layer.objects.active = objs[0]
 
     # entorno fijo: FBX (escala 1 = 1m -> Unreal aplica x100 con ajuste de unidades)
-    sel(arch_objs + slab_objs + [bpy.data.objects["Suelo"], bpy.data.objects["Casa"],
-                                 bpy.data.objects["Tejado"]])
+    sel(arch_objs + slab_objs + [bpy.data.objects["Suelo"]])
     bpy.ops.export_scene.fbx(filepath=os.path.join(base, "SM_Entorno.fbx"), use_selection=True,
                              apply_scale_options="FBX_SCALE_ALL", mesh_smooth_type="FACE")
     # vegetación: una malla base por tipo (glTF, para Foliage / PCG)
@@ -473,9 +487,9 @@ def main():
 
     ground(c_env)
     arch_objs, top = arch(c_env)
-    slab_objs = slabs(c_env)
+    slab_objs = slabs(c_env, length=34)   # el camino llega hasta los escalones del porche
     ivy(c_ivy, top, 1.7)
-    house(c_env)
+    house_info = house()
     atmosphere(c_light)
 
     fir, fern, flower = make_fir(c_proto), make_fern(c_proto), make_flower(c_proto)
@@ -483,10 +497,11 @@ def main():
         p.hide_render = True  # los prototipos no salen en el render (solo sus copias)
 
     on_path = lambda x, y: abs(x) < 2.3 and -15 < y < 20      # camino libre
+    in_clear = lambda x, y: clearing(x, y, 2.0) > 0.0          # claro de la casa
     under_arch = lambda x, y: abs(x) < 3.2 and abs(y) < 1.5
     pts = []
-    pts += scatter(fir, 70, ((-22, 22), (-16, 30)), c_veg, (0.9, 1.6),
-                   lambda x, y: on_path(x, y) or under_arch(x, y), "fir")
+    pts += scatter(fir, 100, ((-24, 24), (-16, 44)), c_veg, (0.9, 1.6),
+                   lambda x, y: on_path(x, y) or under_arch(x, y) or in_clear(x, y), "fir")
     pts += scatter(fern, 160, ((-9, 9), (-15, 18)), c_veg, (0.7, 1.3),
                    lambda x, y: abs(x) < 1.6 or under_arch(x, y), "fern")
     pts += scatter(flower, 40, ((-6, 6), (-13, 14)), c_veg, (0.8, 1.2),
@@ -495,7 +510,7 @@ def main():
     base = export(arch_objs, slab_objs, [fir, fern, flower], pts)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(bpy.path.abspath(OUT), "forest_arch.blend"))
     print("OK ->", base, "| bloques:", len(arch_objs), "| losas:", len(slab_objs),
-          "| puntos vegetación:", len(pts))
+          "| puntos vegetación:", len(pts), "| casa:", house_info)
 
 
 main()
