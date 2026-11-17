@@ -113,3 +113,28 @@ en la sala (otra versión de la habitación o una figura), cambiando su *Show On
 - La buhardilla es un volumen pegado al faldón: el tejado no tiene agujero debajo (desde dentro del desván
   se ve el faldón atravesándola).
 - La sombra de la hiedra del arco que proyecta la linterna del bosque llega a la fachada (efecto, no fallo).
+
+## Shaders
+
+`shaders_pro.py` crea los materiales procedurales de la escena (sin texturas externas, EEVEE y Cycles);
+`forest_arch_scene.py` los carga en `materials()` y, si falta el archivo, vuelve a los básicos.
+
+| Función | Qué hace |
+|---|---|
+| `stone_arch()` | Piedra gris azulada: golpes de cincel (Voronoi F1 cóncavo + ruido), grietas finas, bordes gastados claros (nodo Bevel), tinte cálido en cavidades (nodo AO), musgo en caras que miran arriba, variación por bloque (Object Info Random) |
+| `slab_cracked()` | Losa gris-marrón con grietas, tierra en juntas, líquenes y musgo en las grietas |
+| `soil_footprints()` | Tierra rojiza con 3 rastros de pisadas (talón/puntera), agujas de pino, piedrecitas y zonas húmedas |
+| `ivy()` | Hojas oscuras con barniz (Coat), ~12 % hojas jóvenes claras, nervios, translucidez; tallos marrones |
+| `fern()` / `fir()` / `flower()` | Helecho con foliolos recortados (alfa), abeto "pintado" con puntas claras, hortensia azul-violeta con florecillas |
+| `bark()` / `grass()` / `moss()` / `weathered_wood()` | Corteza, hierba, musgo y madera vieja |
+
+- **Relieve**: piedra, losa y tierra usan `displacement_method = "BOTH"` (Cycles) + bump; en EEVEE y Unreal es solo normal.
+  Para relieve real que viaje en el FBX: `add_micro_displace(obj, 0.03)` (Subdivision 1 + Displace, ~x4 triángulos).
+- **Hornear para Unreal**: `bake_pbr(obj, carpeta, 1024)` hornea con Cycles `T_<obj>_albedo/normal/roughness/ao.png`
+  (crea UV con Smart UV si no hay). Normal en tangente OpenGL: en Unreal marcar *Flip Green Channel*.
+  No se hornea: translucidez/SSS (usar *Two Sided Foliage*), el alfa del helecho y la variación por instancia
+  (usar *PerInstanceRandom* en Foliage).
+- **EEVEE**: el Bevel no redondea, así que el desgaste de bordes solo se ve en Cycles.
+- Vistas previas (Cycles CPU, 24 muestras, 960x540, exposición +1.5, linterna del jugador como luz principal):
+  `previews/shaders_arco.png`, `shaders_camino.png`, `shaders_vegetacion.png`, `shaders_jugador.png`
+  y `shaders_bake_pilar.png` (albedo/normal/roughness horneados de un bloque).
