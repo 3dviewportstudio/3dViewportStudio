@@ -18,17 +18,21 @@ rng = np.random.default_rng(7)
 
 L = np.zeros(N)
 R = np.zeros(N)
+BL = np.zeros(N)  # bus ducked (808 + pads)
+BR = np.zeros(N)
+duck = np.ones(N)
 
 
-def mix(sig, t, gain=1.0, pan=0.0):
+def mix(sig, t, gain=1.0, pan=0.0, bus=False):
     i = int(t * SR)
+    tl, tr = (BL, BR) if bus else (L, R)
     n = min(len(sig), N - i)
     if n <= 0:
         return
     l = np.cos((pan + 1) * np.pi / 4)
     r = np.sin((pan + 1) * np.pi / 4)
-    L[i:i + n] += sig[:n] * gain * l * 1.414
-    R[i:i + n] += sig[:n] * gain * r * 1.414
+    tl[i:i + n] += sig[:n] * gain * l * 1.414
+    tr[i:i + n] += sig[:n] * gain * r * 1.414
 
 
 def tt(d):
@@ -137,7 +141,7 @@ for bar in range(BARS):
     last_bar = bar == BARS - 1
 
     # pads durante todo el tema
-    mix(pad(CHORDS[ch], 16 * STEP + 0.1), t0, 0.8 if section != "intro" else 1.0, -0.2)
+    mix(pad(CHORDS[ch], 16 * STEP + 0.1), t0, 0.8 if section != "intro" else 1.0, -0.2, bus=True)
 
     # melodía (entra desde el compás 2)
     if bar >= 2:
@@ -152,7 +156,7 @@ for bar in range(BARS):
         vel *= rng.uniform(0.85, 1.0)
         if section == "break" and s >= 8:
             vel *= 0.5
-        mix(hat(vel=vel), t0 + s * STEP, 1.3, 0.35 if s % 2 else 0.2)
+        mix(hat(vel=vel), t0 + s * STEP + (0.025 * STEP * 4 if s % 2 else 0), 1.3, 0.35 if s % 2 else 0.2)
     if bar % 2 == 1:  # roll de 32avos en los dos últimos pasos
         for r in range(4):
             mix(hat(vel=0.5 + 0.12 * r), t0 + 14 * STEP + r * STEP / 2, 1.1, 0.3)
@@ -168,6 +172,8 @@ for bar in range(BARS):
     if section != "break":
         for s in KICK_STEPS:
             mix(k_s, t0 + s * STEP, 0.6)
+            i0 = int((t0 + s * STEP) * SR); nd = int(0.2 * SR)
+            duck[i0:i0 + nd] *= 0.3 + 0.7 * (1 - np.exp(-np.arange(min(nd, N - i0)) / (0.06 * SR)))
     for s in DEMBOW_SNARE:
         mix(sn_s, t0 + s * STEP, 1.1)
         mix(rm_s, t0 + s * STEP, 0.9, 0.1)
@@ -179,19 +185,30 @@ for bar in range(BARS):
             dur = (nxt - s) * STEP + 0.05
             note = ROOTS[ch] + (12 if (bar >= 8 and s == 14) else 0)
             gf = ROOTS[ch] + 7 if s == 11 else None
-            mix(bass808(note, min(dur, 0.55), gf), t0 + s * STEP, 0.55)
+            mix(bass808(note, min(dur, 0.55), gf), t0 + s * STEP, 0.55, bus=True)
 
+    if bar % 8 == 7:  # fill de snare en 32avos, crescendo
+        for r in range(8):
+            mix(sn_s, t0 + 12 * STEP + r * STEP / 2, 0.35 + 0.09 * r)
+    if bar == 3:  # riser hacia el drop
+        tr_ = tt(4 * 16 * STEP / 4 * 4)[: int(SR * 16 * STEP)]
+        nz = hp(rng.standard_normal(len(tr_)), 2500) * (tr_ / tr_[-1]) ** 2
+        mix(nz, t0, 0.5, 0.0)
     if last_bar:  # cierre
-        mix(bass808(ROOTS[0], 1.5), t0 + 16 * STEP - 0.01, 0.55)
+        mix(bass808(ROOTS[0], 1.5), t0 + 16 * STEP - 0.01, 0.55, bus=True)
 
-# reverb a la melodía/pad ya mezclados (suave) + master
+# master: duck del bus, reverb, loudness -11 LUFS, limitador suave
+import pyloudnorm as pyln
+L = L + BL * duck
+R = R + BR * duck
 L, R = reverb(L, wet=0.18), reverb(R, wet=0.18)
-peak = max(np.abs(L).max(), np.abs(R).max())
-master = 0.89 / peak
-L, R = np.tanh(L * master * 2.4), np.tanh(R * master * 2.4)
-out = np.stack([L, R], axis=1)
-out = (out / np.abs(out).max() * 0.89 * 32767).astype(np.int16)
-
+x = np.stack([L, R], axis=1)
+x = x / np.abs(x).max()
+meter = pyln.Meter(SR)
+x = pyln.normalize.loudness(x, meter.integrated_loudness(x), -10.5)
+x = np.tanh(x * 1.0)  # saturación suave de picos
+x = x / np.abs(x).max() * 0.89
+out = (x * 32767).astype(np.int16)
 path = sys.argv[1] if len(sys.argv) > 1 else "trap_reggaeton.wav"
 wavfile.write(path, SR, out)
-print("OK", path, f"{len(out)/SR:.1f}s")
+print("OK", path, f"{len(out)/SR:.1f}s", "LUFS", round(meter.integrated_loudness(x), 1))
