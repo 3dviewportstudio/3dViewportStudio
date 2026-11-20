@@ -1,6 +1,6 @@
 # Mensajes de LinkedIn — ViewportStudio3D
 
-Sustituye **100 €** por tu precio de lanzamiento (ej. 49 €/render) antes de enviar.
+Precio de lanzamiento: **100 €** por render. Revísalo antes de enviar.
 Web: https://viewportstudio3d.com
 
 ## 1. Nota de conexión (máx. 300 caracteres)
@@ -20,7 +20,7 @@ Aquí tienes mi trabajo: https://viewportstudio3d.com — ¿te mando una prueba 
 
 **EN**
 Thanks for connecting, [Name]. I'm Lucas, I create 3D product renders for online stores: clean backgrounds, lifestyle scenes and short videos with no photoshoot needed.
-I'm building my first reviews, so right now the **first render is [PRICE]** (launch price) in exchange for an honest review if you like the result.
+I'm building my first reviews, so right now the **first render is 100 €** (launch price) in exchange for an honest review if you like the result.
 My work: https://viewportstudio3d.com/en — want me to send a sample with one of your products?
 
 ## 3. Seguimiento (a los 4-5 días, solo una vez)
