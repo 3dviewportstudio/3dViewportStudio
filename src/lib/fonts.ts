@@ -19,4 +19,13 @@ const satoshi = localFont({
   adjustFontFallback: 'Arial',
 });
 
-export const fontVariables = `${satoshi.variable} ${GeistSans.variable} ${GeistMono.variable}`;
+/** Instrument Serif cursiva (OFL, Google Fonts): solo para palabras de acento en los titulares. */
+const serif = localFont({
+  src: [{ path: '../fonts/InstrumentSerif-Italic.woff2', weight: '400', style: 'italic' }],
+  variable: '--font-serif',
+  display: 'swap',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
+});
+
+export const fontVariables = `${serif.variable} ${satoshi.variable} ${GeistSans.variable} ${GeistMono.variable}`;

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useActionState, useEffect, useRef, useState } from 'react';
-import { budgetIds, serviceIds, t } from '@/content/copy';
+import { budgetIds, inquiryIds, t } from '@/content/copy';
 import { initialContactState, isService, LIMITS, mailtoHref, type ContactField, type ContactState } from '@/lib/contact';
 import { sendContact } from '@/lib/contact-action';
 import type { Locale } from '@/lib/routes';
@@ -152,7 +152,7 @@ export function ContactForm({ locale, privacyHref }: Props) {
             onChange={(e) => setService(e.target.value)}
           >
             <option value="">—</option>
-            {serviceIds.map((id) => (
+            {inquiryIds.map((id) => (
               <option key={id} value={id}>
                 {c.serviceOptions[id]}
               </option>

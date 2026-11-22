@@ -1,9 +1,9 @@
 type Props = { children: string; className?: string };
 
-/** Nombre de la sección con el pequeño encuadre de cámara de la marca (sin numeración: las secciones no son una secuencia). */
+/** Nombre de la sección: mono en mayúsculas con una línea fina delante (mismo sistema que la sección de IA). */
 export function SectionLabel({ children, className = '' }: Props) {
   return (
-    <p className={`label section-mark ${className}`} data-reveal>
+    <p className={`eyebrow ${className}`} data-reveal>
       {children}
     </p>
   );

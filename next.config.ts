@@ -9,6 +9,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Evita que `next dev` añada sus reglas para agentes al CLAUDE.md del proyecto.
+  agentRules: false,
   poweredByHeader: false,
   // La raíz del proyecto es esta carpeta (evita que Next suba hasta otro package-lock.json del equipo).
   outputFileTracingRoot: __dirname,

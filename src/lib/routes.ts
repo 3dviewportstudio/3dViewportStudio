@@ -5,8 +5,8 @@ export const ogLocale: Record<Locale, string> = { es: 'es_ES', en: 'en_US' };
 
 /** IDs de las secciones de la home en cada idioma (anclas de navegación). */
 export const sectionIds = {
-  es: { work: 'trabajo', services: 'servicios', process: 'proceso', about: 'sobre-mi', faq: 'faq', contact: 'contacto' },
-  en: { work: 'work', services: 'services', process: 'process', about: 'about', faq: 'faq', contact: 'contact' },
+  es: { work: 'trabajo', services: 'servicios', ai: 'ia', process: 'proceso', about: 'sobre-mi', faq: 'faq', contact: 'contacto' },
+  en: { work: 'work', services: 'services', ai: 'ai', process: 'process', about: 'about', faq: 'faq', contact: 'contact' },
 } as const satisfies Record<Locale, Record<string, string>>;
 
 export type SectionKey = keyof (typeof sectionIds)['es'];

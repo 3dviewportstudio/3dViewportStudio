@@ -4,6 +4,10 @@ import { site } from '@/lib/site';
 export const serviceIds = ['packshots', 'lifestyle', 'animation'] as const;
 export type ServiceId = (typeof serviceIds)[number];
 
+/** Opciones del formulario: los servicios más el contenido con IA. */
+export const inquiryIds = [...serviceIds, 'ai'] as const;
+export type InquiryId = (typeof inquiryIds)[number];
+
 export const budgetIds = ['lt500', '500-1500', '1500-3000', 'gt3000', 'unknown'] as const;
 export type BudgetId = (typeof budgetIds)[number];
 
@@ -14,7 +18,7 @@ export const copy = {
     meta: {
       title: 'ViewportStudio3D — Renders 3D de producto para marcas que venden online',
       description:
-        'Estudio de render 3D de producto de Lucas Expósito. Packshots para e-commerce, escenas lifestyle y animaciones hechas en Blender, sin sesión de fotos.',
+        'Estudio de render 3D de producto de Lucas Expósito. Packshots para e-commerce, escenas lifestyle, animaciones y contenido con IA hechos en Blender, sin sesión de fotos.',
     },
     a11y: {
       skip: 'Saltar al contenido',
@@ -31,6 +35,7 @@ export const copy = {
       work: 'Trabajo',
       services: 'Servicios',
       process: 'Proceso',
+      ai: 'IA',
       about: 'Sobre mí',
       faq: 'FAQ',
       contact: 'Contacto',
@@ -41,9 +46,18 @@ export const copy = {
       eyebrow: 'Estudio de render 3D de producto',
       eyebrowSide: 'Blender · España',
       title: 'Renders 3D de producto para marcas que venden online.',
-      lead: 'Packshots, escenas y animaciones hechas en Blender. Sin sesión de fotos y con cada variante lista para tu tienda y tus anuncios.',
+      /** Titular visible: una línea por elemento; *palabra* = acento en serif cursiva. */
+      lines: ['Tu producto,', 'en *3D* y listo', 'para vender.'],
+      badge: 'Disponible para nuevos proyectos',
+      lead: 'Packshots, escenas y animaciones hechas en Blender y potenciadas con IA. Cada variante, lista para tu tienda y tus anuncios, sin sesión de fotos.',
+      stats: [
+        { value: `${years}+`, label: 'años en Blender' },
+        { value: '48 h', label: 'máx. para responderte' },
+        { value: '2', label: 'rondas de revisión' },
+      ],
+      scroll: 'Desliza',
       primary: 'Pedir presupuesto',
-      secondary: 'Ver caso Fine Nipona',
+      secondary: 'Ver trabajo',
       response: `Respondo en ${site.responseTime.es}`,
       imageAlt: 'Render 3D de un smartphone de la marca ficticia pPhone sobre fondo negro.',
     },
@@ -83,7 +97,7 @@ export const copy = {
       cursor: 'Ver caso',
     },
     services: {
-      label: 'Servicios',
+      label: 'Lo que hago',
       title: 'Tres formas de presentar mejor tu producto.',
       includes: 'Incluye',
       timing: 'Plazo',
@@ -111,6 +125,24 @@ export const copy = {
           mediaAlt: 'Animación 3D vertical de las dos bolsas de Fine Nipona, Matcha y Mulberry Matcha.',
         },
       } satisfies Record<ServiceId, unknown>,
+    },
+    marquee: ['Packshots para e-commerce', 'Escenas lifestyle', 'Animación de producto', 'Contenido con IA', 'Variantes de color', 'Modelos 3D para web'],
+    ai: {
+      label: 'IA + 3D',
+      title: ['El 3D garantiza tu producto.', 'La IA *multiplica* lo que haces con él.'],
+      intro:
+        'Combino Blender con herramientas de IA generativa. El modelo 3D mantiene tu envase, tu logo y tus proporciones exactos; la IA acelera todo lo que va alrededor.',
+      flow: ['Modelo 3D exacto', 'La IA crea el entorno', 'Retoque y entrega'],
+      items: [
+        { title: 'Escenarios sin límite', text: 'Pruebo decenas de ambientes y fondos alrededor de tu producto real antes de construir la escena final. Eliges viendo imágenes, no leyendo descripciones.' },
+        { title: 'De render a vídeo', text: 'Convierto renders en clips cortos para redes y anuncios con IA de imagen a vídeo: más piezas con el mismo presupuesto.' },
+        { title: 'Variantes a escala', text: 'Colores, sabores, idiomas y tamaños de anuncio en lote, con la etiqueta siempre fiel al diseño original.' },
+        { title: 'Producto en uso', text: 'Tu producto en unas manos, en una mesa o en un salón, con personas y espacios generados. Sin casting ni localizaciones.' },
+        { title: 'Conceptos en horas', text: 'Moodboards y direcciones visuales desde el primer día, para decidir el estilo antes de invertir en el render final.' },
+        { title: 'Reescalado y retoque', text: 'Imágenes a 4K o más y limpieza de detalles para impresión, pantallas grandes y marketplaces exigentes.' },
+      ],
+      note: 'La IA nunca inventa tu producto: siempre parte del modelo 3D, así que lo que ve tu cliente es lo que recibe.',
+      cta: 'Hablemos de tu idea',
     },
     process: {
       label: 'Proceso',
@@ -175,6 +207,10 @@ export const copy = {
           a: 'Packshots para e-commerce: 3–5 días laborables. Escenas lifestyle y de campaña: 1–2 semanas. Animación de producto: 2–4 semanas. Los plazos cuentan desde que tengo todo el material del producto.',
         },
         {
+          q: '¿Usas inteligencia artificial?',
+          a: 'Sí, como herramienta y siempre a la vista: para explorar estilos, generar fondos, crear variantes o convertir renders en vídeo. El producto siempre sale del modelo 3D, así que el envase, el logo y las proporciones son exactos. Si prefieres un proyecto 100 % 3D sin IA, también lo hago.',
+        },
+        {
           q: '¿Cuántas revisiones incluye?',
           a: 'Cada proyecto incluye dos rondas de revisión, para que puedas ajustar encuadres, materiales o luz antes de la entrega final.',
         },
@@ -218,6 +254,7 @@ export const copy = {
         packshots: 'Packshots para e-commerce',
         lifestyle: 'Escenas lifestyle y campaña',
         animation: 'Animación de producto',
+        ai: 'Contenido con IA',
         unknown: 'Aún no lo sé',
       },
       budgetOptions: {
@@ -284,7 +321,7 @@ export const copy = {
     meta: {
       title: 'ViewportStudio3D — 3D product renders for brands that sell online',
       description:
-        '3D product rendering studio by Lucas Expósito. E-commerce packshots, lifestyle scenes and product animations made in Blender — no photoshoot needed.',
+        '3D product rendering studio by Lucas Expósito. E-commerce packshots, lifestyle scenes, product animations and AI content made in Blender — no photoshoot needed.',
     },
     a11y: {
       skip: 'Skip to content',
@@ -301,6 +338,7 @@ export const copy = {
       work: 'Work',
       services: 'Services',
       process: 'Process',
+      ai: 'AI',
       about: 'About',
       faq: 'FAQ',
       contact: 'Contact',
@@ -311,9 +349,17 @@ export const copy = {
       eyebrow: '3D product rendering studio',
       eyebrowSide: 'Blender · Spain',
       title: '3D product renders for brands that sell online.',
-      lead: 'Packshots, scenes and animations made in Blender. No photoshoot, and every variant ready for your store and your ads.',
+      lines: ['Your product,', 'in *3D* and ready', 'to sell.'],
+      badge: 'Available for new projects',
+      lead: 'Packshots, scenes and animations made in Blender and boosted with AI. Every variant ready for your store and your ads — no photoshoot needed.',
+      stats: [
+        { value: `${years}+`, label: 'years in Blender' },
+        { value: '48 h', label: 'max. reply time' },
+        { value: '2', label: 'revision rounds' },
+      ],
+      scroll: 'Scroll',
       primary: 'Get a quote',
-      secondary: 'See the Fine Nipona case',
+      secondary: 'See the work',
       response: `I reply within ${site.responseTime.en}`,
       imageAlt: '3D render of a smartphone from the fictional pPhone brand on a black background.',
     },
@@ -353,7 +399,7 @@ export const copy = {
       cursor: 'View case',
     },
     services: {
-      label: 'Services',
+      label: 'What I do',
       title: 'Three ways to present your product better.',
       includes: 'Includes',
       timing: 'Timeline',
@@ -381,6 +427,24 @@ export const copy = {
           mediaAlt: 'Vertical 3D animation of the two Fine Nipona pouches, Matcha and Mulberry Matcha.',
         },
       } satisfies Record<ServiceId, unknown>,
+    },
+    marquee: ['E-commerce packshots', 'Lifestyle scenes', 'Product animation', 'AI content', 'Colour variants', '3D models for the web'],
+    ai: {
+      label: 'AI + 3D',
+      title: ['3D keeps your product exact.', 'AI *multiplies* what you can do with it.'],
+      intro:
+        'I combine Blender with generative AI tools. The 3D model keeps your packaging, logo and proportions exact; AI speeds up everything around it.',
+      flow: ['Exact 3D model', 'AI builds the setting', 'Retouch & delivery'],
+      items: [
+        { title: 'Endless settings', text: 'I try dozens of environments and backdrops around your real product before building the final scene. You choose by looking at images, not reading descriptions.' },
+        { title: 'From render to video', text: 'I turn renders into short clips for social and ads with image-to-video AI: more assets on the same budget.' },
+        { title: 'Variants at scale', text: 'Colours, flavours, languages and ad sizes in batches, with the label always true to the original design.' },
+        { title: 'Product in use', text: 'Your product in someone’s hands, on a table or in a living room, with generated people and spaces. No casting, no locations.' },
+        { title: 'Concepts in hours', text: 'Moodboards and visual directions from day one, so you pick the style before investing in the final render.' },
+        { title: 'Upscaling & retouch', text: 'Images at 4K and beyond, with clean details for print, big screens and demanding marketplaces.' },
+      ],
+      note: 'AI never invents your product: it always starts from the 3D model, so what your customer sees is what they get.',
+      cta: 'Let’s talk about your idea',
     },
     process: {
       label: 'Process',
@@ -445,6 +509,10 @@ export const copy = {
           a: 'E-commerce packshots: 3–5 working days. Lifestyle and campaign scenes: 1–2 weeks. Product animation: 2–4 weeks. Timelines start once I have all the product material.',
         },
         {
+          q: 'Do you use AI?',
+          a: 'Yes — as a tool, and always openly: to explore styles, generate backdrops, create variants or turn renders into video. The product always comes from the 3D model, so packaging, logo and proportions are exact. If you prefer a 100% 3D project with no AI, I do that too.',
+        },
+        {
           q: 'How many revisions are included?',
           a: 'Every project includes two rounds of revisions, so you can adjust framing, materials or lighting before final delivery.',
         },
@@ -488,6 +556,7 @@ export const copy = {
         packshots: 'E-commerce packshots',
         lifestyle: 'Lifestyle & campaign scenes',
         animation: 'Product animation',
+        ai: 'AI content',
         unknown: 'Not sure yet',
       },
       budgetOptions: {
