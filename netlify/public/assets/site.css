@@ -1,6 +1,7 @@
 /* Viewport Studio 3D — estilos de la web (generada con netlify/src/build.py) */
 html,body{background:#050607}
 @font-face{font-family:'Inter Tight';src:url(/fonts/InterTight.woff2) format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url(/fonts/SpaceGrotesk.woff2) format('woff2');font-weight:500 700;font-display:swap}
 @font-face{font-family:'Instrument Serif';src:url(/fonts/InstrumentSerif-Italic.woff2) format('woff2');font-style:italic;font-weight:400;font-display:swap}
 
 :root{
@@ -22,7 +23,7 @@ img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 h1,h2,h3,p{margin:0}
-h1,h2,h3{text-wrap:balance;font-weight:600}
+h1,h2,h3{text-wrap:balance;font-weight:600;font-family:'Space Grotesk',var(--sans)}
 p{text-wrap:pretty}
 ul,ol{list-style:none;margin:0;padding:0}
 ::selection{background:rgba(59,123,255,.35)}
@@ -101,7 +102,7 @@ body::after{content:'';position:fixed;inset:0;z-index:90;pointer-events:none;opa
 .hero-grid{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
   background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;
   -webkit-mask-image:radial-gradient(ellipse 70% 60% at 30% 60%,#000,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 30% 60%,#000,transparent 75%)}
-.hero h1{font-size:clamp(3rem,13.4vw,4.4rem);line-height:.92;letter-spacing:-.05em;word-spacing:.06em;font-weight:600}
+.hero h1{font-size:clamp(3rem,13.4vw,4.4rem);line-height:.92;letter-spacing:-.045em;word-spacing:.06em;font-weight:600}
 .hero h1 .line{display:block}
 .hero h1 .serif{font-size:1.06em;padding-right:.04em}
 .hero-lead{max-width:32rem;margin-top:22px;font-size:16px;line-height:1.55;color:var(--fg2)}
