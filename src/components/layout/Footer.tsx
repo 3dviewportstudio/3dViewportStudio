@@ -4,7 +4,7 @@ import { routes, sectionHref, type Locale, type SectionKey } from '@/lib/routes'
 import { site } from '@/lib/site';
 import { ArrowUp } from '@/components/ui/Icons';
 
-const NAV: SectionKey[] = ['work', 'services', 'ai', 'process', 'about', 'faq', 'contact'];
+const NAV: SectionKey[] = ['work', 'services', 'process', 'about', 'faq', 'contact'];
 
 export function Footer({ locale }: { locale: Locale }) {
   const c = t(locale);

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url>
+<loc>https://viewportstudio3d.netlify.app/es/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/en/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/es/aviso-legal/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/aviso-legal/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/legal-notice/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/en/legal-notice/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/aviso-legal/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/legal-notice/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/es/privacidad/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/privacidad/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/privacy/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/en/privacy/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/privacidad/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/privacy/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/es/cookies/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/cookies/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/cookies/" />
+</url>
+<url>
+<loc>https://viewportstudio3d.netlify.app/en/cookies/</loc>
+<xhtml:link rel="alternate" hreflang="es" href="https://viewportstudio3d.netlify.app/es/cookies/" />
+<xhtml:link rel="alternate" hreflang="en" href="https://viewportstudio3d.netlify.app/en/cookies/" />
+</url>
+</urlset>

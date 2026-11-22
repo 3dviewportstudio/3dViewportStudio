@@ -9,7 +9,7 @@ import { routes, sectionHref, sectionIds, translatePath, type Locale, type Secti
 import { site } from '@/lib/site';
 import { ArrowRight, Close, Menu } from '@/components/ui/Icons';
 
-const NAV: SectionKey[] = ['work', 'services', 'ai', 'process', 'about'];
+const NAV: SectionKey[] = ['work', 'services', 'process', 'about', 'faq'];
 
 export function Header({ locale }: { locale: Locale }) {
   const c = t(locale);

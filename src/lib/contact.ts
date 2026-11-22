@@ -1,4 +1,4 @@
-import { budgetIds, inquiryIds, type BudgetId, type InquiryId } from '@/content/copy';
+import { budgetIds, serviceIds, type BudgetId, type ServiceId } from '@/content/copy';
 
 export type ContactField = 'name' | 'email' | 'company' | 'service' | 'budget' | 'message' | 'consent';
 
@@ -22,8 +22,8 @@ export const initialContactState: ContactState = { status: 'idle' };
 
 export const LIMITS = { name: 100, email: 200, company: 120, message: 5000, messageMin: 10 } as const;
 
-export function isService(v: string): v is InquiryId {
-  return (inquiryIds as readonly string[]).includes(v);
+export function isService(v: string): v is ServiceId {
+  return (serviceIds as readonly string[]).includes(v);
 }
 
 export function isBudget(v: string): v is BudgetId {
