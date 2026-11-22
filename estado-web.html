@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estado de la web</title>
+<style>
+:root{--bg:#f4f4f7;--card:#fff;--ink:#16161d;--mute:#6b6b78;--line:#e7e7ee;--ok:#12a150;--okbg:#e5f6ec;--warn:#c27803;--warnbg:#fdf3e1;--acc:#5b5bf0;--bar:#e9e9f5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0e13;--card:#18181f;--ink:#f1f1f5;--mute:#9a9aa8;--line:#2a2a34;--okbg:#0f2c1c;--warnbg:#33260b;--bar:#25253a;--acc:#8c8cff}}
+:root[data-theme="dark"]{--bg:#0e0e13;--card:#18181f;--ink:#f1f1f5;--mute:#9a9aa8;--line:#2a2a34;--okbg:#0f2c1c;--warnbg:#33260b;--bar:#25253a;--acc:#8c8cff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px 16px}
+.card{max-width:620px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.08);overflow:hidden}
+.head{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+h1{margin:0;font-size:20px;letter-spacing:-.01em}
+.url{color:var(--mute);font-size:13px;margin-top:2px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;font-size:13px;font-weight:600;background:var(--okbg);color:var(--ok)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:var(--card);padding:16px 18px}
+.kpi b{display:block;font-size:24px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--mute)}
+.sec{padding:18px 24px;border-top:1px solid var(--line)}
+.sec h2{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.row{display:grid;grid-template-columns:110px 1fr 46px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
+.track{height:8px;background:var(--bar);border-radius:6px;overflow:hidden}
+.fill{height:100%;background:var(--acc);border-radius:6px}
+.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--mute)}
+ul{margin:0;padding-left:18px}li{margin:4px 0}
+.warn{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:12px 14px;font-size:14px}
+.foot{padding:12px 24px;font-size:12px;color:var(--mute);border-top:1px solid var(--line)}
+code{font-size:12px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <div>
+      <h1>ViewportStudio3D · Web</h1>
+      <div class="url">viewportstudio3d.netlify.app · Netlify</div>
+    </div>
+    <span class="pill"><i></i>En línea</span>
+  </div>
+
+  <div class="grid">
+    <div class="kpi"><b>1.209</b><span>peticiones (24 h)</span></div>
+    <div class="kpi"><b>859</b><span>desde navegadores</span></div>
+    <div class="kpi"><b>~78 MB</b><span>datos servidos</span></div>
+    <div class="kpi"><b>99 %</b><span>respuestas sin error</span></div>
+  </div>
+
+  <div class="sec">
+    <h2>Visitas por país</h2>
+    <div class="row"><span>🇪🇸 España</span><div class="track"><div class="fill" style="width:59%"></div></div><span class="n">710</span></div>
+    <div class="row"><span>🇺🇸 EE. UU.</span><div class="track"><div class="fill" style="width:41%"></div></div><span class="n">499</span></div>
+  </div>
+
+  <div class="sec">
+    <h2>Lo más pedido</h2>
+    <div class="row"><span>pphone.webm</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="n">62</span></div>
+    <div class="row"><span>/es/ (inicio)</span><div class="track"><div class="fill" style="width:69%"></div></div><span class="n">43</span></div>
+    <div class="row"><span>pack.webm</span><div class="track"><div class="fill" style="width:66%"></div></div><span class="n">41</span></div>
+    <div class="row"><span>logo-vs.webp</span><div class="track"><div class="fill" style="width:58%"></div></div><span class="n">36</span></div>
+  </div>
+
+  <div class="sec">
+    <h2>A revisar</h2>
+    <div class="warn">
+      <ul>
+        <li><b>11 páginas no encontradas (404)</b>: piezas antiguas de la web pedidas tras la última subida, y una dirección rota <code>/eshttps://…</code>.</li>
+        <li><b>325 visitas automáticas</b> (robots/herramientas), un 27 % del total.</li>
+        <li>Solo hay datos de 24 h (plan gratuito de Netlify) y no es tu dominio propio.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">Último despliegue: 22 nov 2026, 20:49 UTC · listo en 4 s · subida manual (no desde GitHub)</div>
+</div>
+</body>
+</html>
