@@ -58,7 +58,7 @@ COPY = {
         legal=[('Aviso legal', '/es/aviso-legal/'), ('Política de privacidad', '/es/privacidad/'), ('Política de cookies', '/es/cookies/')],
         hero=dict(
             live='Abierto a nuevos proyectos', tags='CGI · Producto · Motion · IA',
-            lines=['Producto en 3D', 'que *se mueve*', 'y vende.'],
+            lines=['Tu producto', 'en *3D*,', 'listo para vender.'],
             lead='Renders y animaciones 3D de tu producto, hechos en Blender. También uso IA cuando suma, sin cambiar la forma real de tu producto.',
             primary='Pedir presupuesto', secondary='Ver proyectos',
             who='Lucas', who_role='Artista 3D · Blender, de principio a fin',
@@ -126,7 +126,7 @@ COPY = {
         legal=[('Legal notice', '/en/legal-notice/'), ('Privacy policy', '/en/privacy/'), ('Cookie policy', '/en/cookies/')],
         hero=dict(
             live='Open to new projects', tags='CGI · Product · Motion · AI',
-            lines=['3D product', 'that *moves*', 'and sells.'],
+            lines=['Your product', 'in *3D*,', 'ready to sell.'],
             lead='Renders and 3D animations of your product, made in Blender. I use AI too when it helps, without changing how your product really looks.',
             primary='Get a quote', secondary='See projects',
             who='Lucas', who_role='3D artist · Blender, start to finish',
