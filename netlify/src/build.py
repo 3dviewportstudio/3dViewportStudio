@@ -95,9 +95,9 @@ COPY = {
             ('Animación y render', 'Movimiento de cámara y producto, y render final en la resolución que necesites.'),
             ('Entrega', 'Imágenes y vídeos en los formatos de cada canal, con una ronda de cambios incluida.'),
         ]),
-        studio=dict(label='Estudio', title='Detrás del *render*.', avatar='Avatar 3D de Lucas, el artista detrás de Viewport Studio 3D',
+        studio=dict(label='Estudio', title='Detrás del *render*.', avatar='Foto de Lucas, el artista detrás de Viewport Studio 3D',
                     text='Viewport Studio 3D es el estudio de Lucas, artista 3D especializado en producto. Una sola persona de principio a fin en Blender: modelado, materiales, luz, animación y render. Eso significa respuestas rápidas, un único interlocutor y un cuidado especial en materiales y líquidos.',
-                    facts=[('1', 'persona, de principio a fin'), ('30 €/h', 'desde, + IVA')], tools_label='Herramientas', tools=['Blender', 'Cycles', 'EEVEE', 'Geometry Nodes']),
+                    facts=[('1', 'persona, de principio a fin'), ('30 €/h', 'desde, + IVA')], human='Persona real, no un robot: esta es mi cara y así trabajo.', tools_label='Herramientas', tools=['Blender', 'Cycles', 'EEVEE', 'Geometry Nodes']),
         faq=dict(label='FAQ', title='Preguntas, *antes de empezar*.', items=[
             ('¿Cuánto cuesta un proyecto?', 'Desde 30 €/h + IVA (36,30 €/h IVA incluido). Cada proyecto se presupuesta a medida según el producto, el número de imágenes o vídeos y su complejidad.'),
             ('¿Cuánto tardas en entregarlo?', 'No hay plazos fijos: depende de cada proyecto. Junto con el presupuesto te doy una fecha estimada de entrega.'),
@@ -163,9 +163,9 @@ COPY = {
             ('Animation and render', 'Camera and product motion, and a final render at the resolution you need.'),
             ('Delivery', 'Images and videos in the formats each channel needs, with one round of changes included.'),
         ]),
-        studio=dict(label='Studio', title='Behind the *render*.', avatar='3D avatar of Lucas, the artist behind Viewport Studio 3D',
+        studio=dict(label='Studio', title='Behind the *render*.', avatar='Foto de Lucas, el artista detrás de Viewport Studio 3D',
                     text='Viewport Studio 3D is the studio of Lucas, a 3D artist specialised in products. One person from start to finish in Blender: modelling, materials, light, animation and render. That means fast replies, a single point of contact and special care for materials and liquids.',
-                    facts=[('1', 'person, start to finish'), ('€30/h', 'from, + VAT')], tools_label='Tools', tools=['Blender', 'Cycles', 'EEVEE', 'Geometry Nodes']),
+                    facts=[('1', 'person, start to finish'), ('€30/h', 'from, + VAT')], human='A real person, not a robot: this is my face and how I work.', tools_label='Tools', tools=['Blender', 'Cycles', 'EEVEE', 'Geometry Nodes']),
         faq=dict(label='FAQ', title='Questions, *before we start*.', items=[
             ('How much does a project cost?', 'From €30/hour + VAT (€36.30 including VAT). Every project is quoted individually, based on the product, the number of images or videos and their complexity.'),
             ('How long does it take?', 'There are no fixed lead times: it depends on each project. Along with the quote I give you an estimated delivery date.'),
@@ -305,7 +305,7 @@ def hero(lang, c):
       <a class="btn btn-primary" href="#{c["contact_id"]}">{e(h["primary"])}<span class="chip">{ARROW}</span></a>
       <a class="btn btn-ghost glass" href="#proyectos">{e(h["secondary"])}</a>
     </div>
-    <div class="who fade" style="--d:5"><img src="/brand/avatar.webp" alt="" width="42" height="42"><p><strong>{e(h["who"])}</strong>{e(h["who_role"])}</p></div>
+    <div class="who fade" style="--d:5"><img src="/brand/lucas-sm.webp" alt="" width="42" height="42"><p><strong>{e(h["who"])}</strong>{e(h["who_role"])}</p></div>
   </div>
   <div class="reel" role="region" aria-label="{e(h["reel"])}">
     {vids}
@@ -395,10 +395,11 @@ def studio(c):
     facts = ''.join(f'<div class="fact glass"><strong>{e(n)}</strong><span>{e(t)}</span></div>' for n, t in s['facts'])
     tools = ''.join(f'<li>{e(t)}</li>' for t in s['tools'])
     return f'''<section id="sobre" class="section" aria-labelledby="studio-title"><div class="wrap studio">
-<div class="avatar" data-reveal><img src="/brand/avatar-circulo.webp" alt="{e(s["avatar"])}" loading="lazy" decoding="async" width="560" height="560"></div>
+<div class="avatar" data-reveal><img src="/brand/lucas.webp" alt="{e(s["avatar"])}" loading="lazy" decoding="async" width="640" height="640"></div>
 <div><p class="eyebrow" data-reveal>{e(s["label"])}</p><h2 id="studio-title" class="h2" style="margin-top:22px" data-reveal>{rich(s["title"])}</h2>
 <p class="lead" style="margin-top:24px;max-width:40rem" data-reveal>{e(s["text"])}</p>
 <div class="facts" data-reveal>{facts}</div>
+<p class="human" data-reveal>{e(s["human"])}</p>
 <p class="mono" style="margin-top:28px" data-reveal>{e(s["tools_label"])}</p><ul class="tools" style="margin-top:12px" data-reveal>{tools}</ul></div>
 </div></section>'''
 
