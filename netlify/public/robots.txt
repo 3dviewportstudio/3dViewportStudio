@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://viewportstudio3d.netlify.app/sitemap.xml
