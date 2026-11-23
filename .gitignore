@@ -13,3 +13,4 @@ npm-debug.log*
 verificacion.log
 informes/
 rerun.txt
+.claude/settings.local.json
