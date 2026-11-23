@@ -18,6 +18,7 @@ SOCIALS = [
     ('Instagram', 'https://www.instagram.com/viewportstudio3d/'),
     ('TikTok', 'https://www.tiktok.com/@viewport.studio'),
     ('Upwork', 'https://www.upwork.com/freelancers/viewportstudio3d'),
+    ('LinkedIn', 'https://www.linkedin.com/in/lucas-exposito-46b018450/'),
 ]
 
 # Proyectos: el orden define el reel del hero; "col" reparte la rejilla (v = vertical, h = horizontal)
